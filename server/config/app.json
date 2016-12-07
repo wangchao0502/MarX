@@ -1,0 +1,23 @@
+{
+  "development": {
+    "name": "FuckScaffold",
+    "port": "9999",
+    "cookie": {
+      "httpOnly": true,
+      "maxAge": 604800000,
+      "rewrite": true,
+      "signed": true
+    }
+  },
+
+  "production": {
+    "name": "FuckScaffold",
+    "port": "9999",
+    "cookie": {
+      "httpOnly": true,
+      "maxAge": 604800000,
+      "rewrite": true,
+      "signed": true
+    }
+  }
+}

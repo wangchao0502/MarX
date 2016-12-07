@@ -1,0 +1,17 @@
+{
+  "name": "vendor",
+  "authors": [
+    "wangchao <wangchao@youzan.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
