@@ -32,7 +32,7 @@
         "extra": {
             "shims": "",
             "paths": "",
-            "commonModule": "superman.common.js",
+            "commonModule": "superman.bundle.js",
             "appendEntry": true,
             "esVersion": 7
         },

@@ -2,3 +2,4 @@
 generator-fuck-scaffold/
 node_modules/
 static/
+yarn.lock

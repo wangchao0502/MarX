@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "NODE_ENV=development gulp dev | bunyan",
     "sync": "NODE_ENV=development node server/babel.sync.js",
-    "webpack": "webpack --progress --colors --watch"
+    "build": "superman build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@youzan/superman": "^0.1.27",
     "antd": "^2.5.0",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.8",

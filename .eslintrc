@@ -6,6 +6,7 @@
     "document": true
   },
   "rules": {
+    "no-param-reassign": ["error", { "props": false }],
     "react/prop-types": "off",
     "react/prefer-es6-class": "off",
     "class-methods-use-this": "off",
