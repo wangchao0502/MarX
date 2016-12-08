@@ -1,41 +1,44 @@
 {
-    "project": {
-        "projectName": "FuckScaffold",
-        "js": {
-            "src": "client/js/src",
-            "local": "static/js",
-            "build": "static/js"
-        },
-        "css": {
-            "src": "client/sass",
-            "local": "static/css",
-            "build": "static/css"
-        }
+  "project": {
+    "projectName": "FuckScaffold",
+    "js": {
+      "src": "client/js/src",
+      "local": "static/js",
+      "build": "build/js"
     },
-    "hash": [
-        {
-            "dist": {
-                "js": "server/config/version_js.json",
-                "css": "server/config/version_css.json"
-            },
-            "template": {
-                "head": "{",
-                "record": "\"<%= prefix %><%= name %>\": \"<%= path %>\"",
-                "foot": "}"
-            }
-        }
-    ],
-    "cdn": {
-        "dist": "/FuckScaffold/build"
-    },
-    "build": {
-        "extra": {
-            "shims": "",
-            "paths": "",
-            "commonModule": "superman.bundle.js",
-            "appendEntry": true,
-            "esVersion": 7
-        },
-        "confPath": ""
+    "css": {
+      "src": "client/sass",
+      "local": "static/css",
+      "build": "build/css"
     }
+  },
+  "hash": [
+    {
+      "dist": {
+        "js": "server/config/version_js.json",
+        "css": "server/config/version_css.json"
+      },
+      "template": {
+        "head": "{",
+        "record": "  \"<%= prefix %><%= name %>\": \"<%= path %>\"",
+        "foot": "}"
+      }
+    }
+  ],
+  "cdn": {
+    "basic": {
+      "src": ["build/**/*.js", "build/**/*.css"],
+      "dist": "/FuckScaffold/build"
+    }
+  },
+  "build": {
+    "extra": {
+      "shims": "",
+      "paths": "",
+      "commonModule": "superman.bundle.js",
+      "appendEntry": true,
+      "esVersion": 7
+    },
+    "confPath": ""
+  }
 }

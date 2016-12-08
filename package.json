@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development gulp dev | bunyan",
     "sync": "NODE_ENV=development node server/babel.sync.js",
-    "build": "superman build"
+    "build": "superman build",
+    "deploy": "superman build pre && superman hash && superman cdn "
   },
   "author": "",
   "license": "ISC",
