@@ -1,7 +1,14 @@
 'use strict';
 
-const nodemon = require('gulp-nodemon');
 const gulp = require('gulp');
+const chalk = require('chalk');
+const nodemon = require('gulp-nodemon');
+
+const isInteractive = process.stdout.isTTY;
+
+if (isInteractive) {
+  console.log(chalk.yellow('Dev server is running...'));
+}
 
 gulp.task('dev', () => {
   nodemon({
