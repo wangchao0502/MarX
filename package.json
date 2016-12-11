@@ -4,7 +4,7 @@
   "description": "这是一个全栈脚手架",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development gulp dev | bunyan",
+    "dev": "gulp dev | bunyan",
     "sync": "NODE_ENV=development node server/babel.sync.js",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "
@@ -17,6 +17,7 @@
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.8",
     "babel-plugin-transform-runtime": "^6.15.0",
+    "browser-sync": "^2.18.2",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",

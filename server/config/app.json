@@ -1,6 +1,7 @@
 {
   "development": {
-    "name": "FuckScaffold",
+    "name": "MarX",
+    "host": "localhost",
     "port": "9999",
     "cookie": {
       "httpOnly": true,
@@ -11,7 +12,8 @@
   },
 
   "production": {
-    "name": "FuckScaffold",
+    "name": "MarX",
+    "host": "localhost",
     "port": "9999",
     "cookie": {
       "httpOnly": true,

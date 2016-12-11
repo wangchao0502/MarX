@@ -2,6 +2,7 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import convert from 'koa-convert';
 import bunyan from 'bunyan';
+import EventBus from '../eventbus';
 import { app as appConfig } from './config/index';
 import middleware from './middleware/index';
 import IndexController from './controller/IndexController';
@@ -18,6 +19,7 @@ const router = new Router();
 const indexCtl = new IndexController();
 const loginCtl = new LoginController();
 
+router.get('/', indexCtl.indexHtml);
 router.get('首页', '/index', indexCtl.indexHtml);
 router.get('登陆', '/login', loginCtl.loginHtml);
 
@@ -31,6 +33,11 @@ app.use(convert(router.allowedMethods()));
 
 app.listen(APP_PORT, () => {
   Logger.info(`${APP_NAME} is running, port: ${APP_PORT}`);
+
+  if (ENV === 'development') {
+    // wakeup browsersync
+    EventBus.emit('MARX_RUNNING');
+  }
 });
 
 export default app;

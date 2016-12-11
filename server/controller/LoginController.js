@@ -11,7 +11,7 @@ export default class LoginController extends BaseController {
     this.Logger.info(account.dataValues);
 
     await ctx.render('Login', {
-      title: 'FuckScaffold',
+      title: 'MarX',
     });
   }
 
