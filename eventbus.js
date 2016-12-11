@@ -4,7 +4,7 @@ const EventEmitter = require('events').EventEmitter;
 const browserSync = require('browser-sync').create();
 const appConfig = require('./server/config/app.json');
 
-const ENV = 'development';
+const ENV = process.env.NODE_ENV;
 
 const EventBus = new EventEmitter();
 
