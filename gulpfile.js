@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const chalk = require('chalk');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync').create();
 const appConfig = require('./server/config/app.json');
@@ -16,9 +15,7 @@ gulp.task('nodemon', function(cb) {
   let started = false;
 
   return nodemon({
-    nodeArgs: ['--harmony'],
     watch: ['server/'],
-    ignore: ['client/', 'static/'],
     script: 'server/babel.app.js',
     env: {
       NODE_ENV: ENV,
@@ -35,7 +32,7 @@ gulp.task('nodemon', function(cb) {
           notify: false,
           scrollProportionally: false,
         });
-      }, 2000);
+      }, 8000);
       started = true;
     }
   });

@@ -38,7 +38,7 @@ service：   IndexService
 
 ○ 支持将打包错误显示在浏览器 [不实用，推迟]
 
-○ 开发router中间键，用更优雅的方式写router
+● 开发router中间键，用更优雅的方式写router
 
 ○ 支持yo-generator生成
 

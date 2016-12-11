@@ -1,12 +1,13 @@
-import Router from 'koa-router';
-import IndexController from '../controller/IndexController';
+import router from '../router/defaultRouter';
+import * as Controllers from '../controller/index';
 
-const router = new Router();
+Object.keys(Controllers).forEach((ctlName) => {
+  const controller = new Controllers[ctlName]();
+  const $routes = controller.$routes;
 
-router.get('首页', '/index', IndexController.indexHtml);
+  $routes.forEach((item) => {
+    router[item.method](item.url, ...item.middleware, controller[item.fnName]);
+  });
+});
 
-export default async (ctx, next) => {
-  await router.routes();
-  await router.allowedMethods();
-  await next();
-};
+export default router;
