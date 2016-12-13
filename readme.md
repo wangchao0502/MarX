@@ -18,6 +18,7 @@
 
 
 **>>> 以上你的环境就配置好了 <<<**
+
 以上环境默认需要开启本地的mysql服务和redis服务，配置文件在`server/config/mysql.json`和`server/config/redis.json`中
 
 注意：目前这个脚手架还比较初级，你看下下面的todolist就知道了。
@@ -70,7 +71,7 @@ service：   IndexService
 
 ● 支持LiveReload功能
 
-○ 支持将打包错误显示在浏览器 [不实用，推迟]
+○ 支持将打包错误显示在浏览器 **[不实用，推迟]**
 
 ● 开发router中间键，用更优雅的方式写router
 
