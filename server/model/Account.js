@@ -1,7 +1,7 @@
 const Account = (sequelize, DataTypes) => (
   sequelize.define('Account', {
     id: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
