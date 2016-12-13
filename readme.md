@@ -75,9 +75,9 @@ service：   IndexService
 
 ● 开发router中间键，用更优雅的方式写router
 
-○ 通过命令展示／查询 url对应的Controller和Action
+● 每次启动项目生成一个router关联的文件
 
-○ 每次启动项目生成一个router关联的文件
+○ 通过命令展示／查询 url对应的Controller和Action
 
 ○ 支持yo-generator生成
 
