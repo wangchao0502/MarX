@@ -6,33 +6,36 @@ const browserSync = require('browser-sync').create();
 const appConfig = require('./server/config/app.json');
 
 const ENV = 'development';
+const BROWSER_SYNC_RELOAD_DELAY = 10000;
 
-gulp.task('default', ['dev']);
+gulp.task('default', ['nodemon', 'browser-sync']);
 
-gulp.task('dev', ['nodemon']);
+gulp.task('browser-sync', function() {
+  setTimeout(function() {
+      browserSync.init({
+      proxy: 'http://' + appConfig[ENV].host + ':' + appConfig[ENV].port + '/login',
+      files: ['static/**/*.*', 'server/view/**/*.html'],
+      browser: 'google chrome',
+      port: 54188,
+      online: false,
+      notify: false,
+      scrollProportionally: false,
+    });
+  }, BROWSER_SYNC_RELOAD_DELAY);
+
+});
 
 gulp.task('nodemon', function(cb) {
   let started = false;
-
   return nodemon({
-    watch: ['server/'],
+    watch: ['server/**/*.js', 'server/**/*.json'],
     script: 'server/babel.app.js',
     env: {
       NODE_ENV: ENV,
     },
   }).on('start', function() {
     if (!started) {
-      setTimeout(() => {
-        browserSync.init({
-          proxy: 'http://' + appConfig[ENV].host + ':' + appConfig[ENV].port + '/login',
-          files: ['static/**/*.*', 'server/view/**/*.html'],
-          browser: 'google chrome',
-          port: 54188,
-          online: false,
-          notify: false,
-          scrollProportionally: false,
-        });
-      }, 8000);
+      cb();
       started = true;
     }
   });

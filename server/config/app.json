@@ -2,7 +2,7 @@
   "development": {
     "name": "MarX",
     "host": "localhost",
-    "port": "9999",
+    "port": "9998",
     "cookie": {
       "httpOnly": true,
       "maxAge": 604800000,
@@ -14,7 +14,7 @@
   "production": {
     "name": "MarX",
     "host": "localhost",
-    "port": "9999",
+    "port": "9998",
     "cookie": {
       "httpOnly": true,
       "maxAge": 604800000,

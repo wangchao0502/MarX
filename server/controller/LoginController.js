@@ -17,5 +17,4 @@ export default class LoginController extends BaseController {
       title: 'MarX',
     });
   }
-
 }
