@@ -77,15 +77,17 @@ service：   IndexService
 
 ● 每次启动项目生成一个router关联的文件
 
-○ 通过命令展示／查询 url对应的Controller和Action
-
 ○ 支持yo-generator生成
+
+○ 通过命令展示／查询 url对应的Controller和Action
 
 ○ 开发MarX-CLI
 
 ○ 支持命令行自动生成前端代码，controller代码，service代码
 
 ○ 支持unit test
+
+○ 支持自动生成文档
 
 ○ 开发消息队列模块
 

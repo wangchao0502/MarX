@@ -1,5 +1,4 @@
 import Router from 'koa-router';
-import IndexController from '../controller/IndexController';
 
 const router = new Router();
 
