@@ -27,7 +27,7 @@ function route(method, ...args) {
 }
 
 // @[method](...args) === @route(method, ...args)
-const methods = ['get', 'post', 'put', 'patch', 'delete', 'all', 'redirect'];
+const methods = ['get', 'post', 'put', 'patch', 'delete'];
 methods.forEach((method) => {
   exportMethod[method] = route.bind(null, method);
 });

@@ -9,4 +9,9 @@ export default class IndexController extends BaseController {
   async getIndexHtml(ctx) {
     ctx.redirect('/login');
   }
+
+  async check(ctx, next) {
+    this.Logger.info('Check Check Check');
+    await next();
+  }
 }

@@ -1,16 +1,44 @@
 import fs from 'fs';
 import path from 'path';
-import router from '../router/defaultRouter';
+import Router from 'koa-router';
+import defaultRouter from '../router/default.json';
 import * as Controllers from '../controller/index';
 
+const router = new Router();
 const routerConfig = [];
+/*
+ * key is Controller name, value is a array with object
+ * {
+ *   method: 'get|post|all|delete|patch|put',
+ *   url
+ * }
+ */
+const defaultRouterConfig = {};
+// deal with defaultRouter
 
-Object.keys(Controllers).forEach((ctlName) => {
-  const controller = new Controllers[ctlName]();
+Object.keys(defaultRouter).forEach((key) => {
+  const [method, url] = key.split(' ');
+  const [ctrlName, fnName] = defaultRouter[key].split('.');
+  if (!defaultRouterConfig[ctrlName]) defaultRouterConfig[ctrlName] = [];
+  defaultRouterConfig[ctrlName].push({
+    method,
+    url,
+    fnName,
+  });
+});
+
+Object.keys(Controllers).forEach((ctrlName) => {
+  const controller = new Controllers[ctrlName]();
   const $routes = controller.$routes;
 
+  // load default router config first
+  (defaultRouterConfig[ctrlName] || []).forEach((item) => {
+    routerConfig.push(`[${item.method.toUpperCase()}] ${item.url} => ${ctrlName}.${item.fnName}`);
+    router[item.method](item.url, controller[item.fnName]);
+  });
+
   $routes.forEach((item) => {
-    routerConfig.push(`[${item.method.toUpperCase()}] ${item.url} => ${ctlName}.${item.fnName}`);
+    routerConfig.push(`[${item.method.toUpperCase()}] ${item.url} => ${ctrlName}.${item.fnName}`);
     router[item.method](item.url, ...item.middleware, controller[item.fnName]);
   });
 });

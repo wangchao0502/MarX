@@ -14,6 +14,7 @@ const router = middleware.router;
 
 app.use(middleware.error);
 app.use(middleware.body);
+app.use(middleware.code);
 app.use(middleware.render);
 app.use(middleware.session);
 app.use(middleware.staticServer);

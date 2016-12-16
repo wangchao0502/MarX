@@ -1,4 +1,5 @@
 import body from './body';
+import code from './code';
 import error from './error';
 import render from './render';
 import router from './router';
@@ -7,6 +8,7 @@ import staticServer from './staticServer';
 
 export default {
   body,
+  code,
   error,
   render,
   router,
