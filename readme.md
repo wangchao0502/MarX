@@ -1,36 +1,42 @@
 ## 环境搭建
 
+推荐node和npm版本如下，npm4有破坏性改动，有些包可能会安装出错，所以不推荐升级。
+
+**Node v4.2.1 or gsv6.9.1**
+
+**NPM 3.10.8**
+
+首先在你的bash config文件中添加以上代码（如果用的zsh，文件路径为~/.zshrc），并执行`source ~/.zshrc`使配置生效。
+
 > alias ynpm="npm --registry=https://registry.npm.qima-inc.com"
-
-首先在你的bash config文件中添加以上代码（如果用的zsh，文件路径为~/.zshrc）
-
-> source ~/.zshrc
-
-更新环境配置
-
-> cd MarX
 
 进入到Marx项目文件
 
-> ynpm i
+> cd MarX
 
 安装第三方依赖
+
+> ynpm i
 
 
 **>>> 以上你的环境就配置好了 <<<**
 
-以上环境默认需要开启本地的mysql服务和redis服务，配置文件在`server/config/mysql.json`和`server/config/redis.json`中
+以上环境默认需要开启本地的mysql服务和redis服务，配置文件在`server/config/mysql.json`和`server/config/redis.json`中。记得修改登陆密码哦～
 
 注意：目前这个脚手架还比较初级，你看下下面的todolist就知道了。
 
 ## 如何使用
 
+以下两个命令分别在两个bash窗口执行，`npm run dev`启动开发环境的node服务，
+`npm run build`启动实时打包功能。
+
 > npm run dev
 
 > npm run build
 
-以上两个命令分别在两个bash窗口执行，`npm run dev`启动开发环境的node服务，
-`npm run build`启动实时打包功能。
+如果遇到类似下面的提示，请运行`npm rebuild`命令重新编译相关依赖包
+
+> Module version mismatch. Expected 48, got 46
 
 ## 脚手架设计思路
 
