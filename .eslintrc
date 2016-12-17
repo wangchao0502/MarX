@@ -6,6 +6,7 @@
     "document": true
   },
   "rules": {
+    "no-multi-spaces": "off",
     "no-mixed-operators": "off",
     "no-param-reassign": ["error", { "props": false }],
     "react/prop-types": "off",

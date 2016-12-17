@@ -1,11 +1,14 @@
 function jsonMiddleware(status, data) {
   const ctx = this;
-  ctx.body = {
-    code: status.code,
-    msg: status.msg,
-    data,
-  };
-
+  if (!data) {
+    ctx.body = status;
+  } else {
+    ctx.body = {
+      code: status.code,
+      msg: status.msg,
+      data,
+    };
+  }
 }
 
 const json = async(ctx, next) => {

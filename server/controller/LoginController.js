@@ -41,4 +41,11 @@ export default class LoginController extends BaseController {
       ctx.json(LOGIN_ERROR);
     }
   }
+
+  @router.full.get('/logout')
+  async logout(ctx) {
+    ctx.session = null;
+    ctx.redirect('login');
+  }
+
 }
