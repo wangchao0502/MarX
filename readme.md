@@ -2,9 +2,9 @@
 
 推荐node和npm版本如下，npm4有破坏性改动，有些包可能会安装出错，所以不推荐升级。
 
-**Node v4.2.1 or gsv6.9.1**
+**node v4.2.1 or v6.9.1**
 
-**NPM 3.10.8**
+**npm v3.10.8**
 
 首先在你的bash config文件中添加以上代码（如果用的zsh，文件路径为~/.zshrc），并执行`source ~/.zshrc`使配置生效。
 
@@ -68,8 +68,12 @@ config：各种配置
 
 #### 规范
 controller，service，model文件名使用大驼峰命名法
+
 controller：IndexController
+
 service：   IndexService
+
+model:      Account, User
 
 ### TODO
 
