@@ -19,9 +19,9 @@ function render(view, data = {}) {
     }),
   );
   return baseRender.call(this, view, Object.assign(data, { scope }));
-};
+}
 
-const middleware = async (ctx, next) => {
+const middleware = async(ctx, next) => {
   ctx.render = render.bind(ctx);
   await next();
 };

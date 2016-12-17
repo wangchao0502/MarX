@@ -12,3 +12,8 @@ export const NEED_AUTH = {
   code: 9999,
   msg: 'permission denied',
 };
+
+export const LOGIN_ERROR = {
+  code: 10000,
+  msg: 'Login username or password is wrong',
+};

@@ -10,8 +10,7 @@ const ENV = process.env.NODE_ENV;
 
 const sessionMiddleware = convert(session({
   store: redisStore(redisConfig[ENV]),
-  prefix: `${appConfig[ENV].name}.sess`,
-  cookie: appConfig[ENV].cookie,
+  prefix: `${appConfig[ENV].name}.sess.`,
 }));
 
 export default sessionMiddleware;

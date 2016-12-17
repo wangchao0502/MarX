@@ -11,10 +11,14 @@ const APP_PORT = appConfig[ENV].port;
 
 const app = new Koa();
 const router = middleware.router;
+// set for session
+app.keys = [APP_NAME];
 
-app.use(middleware.error);
+app.use(middleware.tryCatch);
 app.use(middleware.body);
 app.use(middleware.code);
+app.use(middleware.json);
+app.use(middleware.error);
 app.use(middleware.render);
 app.use(middleware.session);
 app.use(middleware.staticServer);

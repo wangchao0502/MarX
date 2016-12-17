@@ -6,6 +6,7 @@
     "document": true
   },
   "rules": {
+    "no-mixed-operators": "off",
     "no-param-reassign": ["error", { "props": false }],
     "react/prop-types": "off",
     "react/prefer-es6-class": "off",

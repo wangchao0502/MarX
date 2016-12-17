@@ -35,7 +35,7 @@
     "extra": {
       "shims": "",
       "paths": "",
-      "commonModule": "superman.bundle.js",
+      "commonModule": "",
       "appendEntry": true,
       "esVersion": 7,
       "sourceMap": false

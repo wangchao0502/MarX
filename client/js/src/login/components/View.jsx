@@ -1,29 +1,50 @@
 import React from 'react';
+import ajax from 'superagent';
 import {
   Form,
   Icon,
   Input,
   Button,
   Checkbox,
+  message,
 } from 'antd';
 
 const FormItem = Form.Item;
+const MESSAGE_DURING = 5;
 
 const LoginForm = Form.create()(React.createClass({
-  handleSubmit(e) {
+  getInitialState() {
+    return {
+      loading: false,
+    };
+  },
+
+  onSubmit(e) {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+    this.props.form.validateFields((formError, values) => {
+      if (!formError) {
+        this.setState({ loading: true });
+        ajax
+          .post('/login')
+          .send(values)
+          .end((resError, res) => {
+            if (resError || (res.body && res.body.code !== 0)) {
+              message.error(resError || res.body.msg, MESSAGE_DURING);
+            } else {
+              window.location.href = '/';
+            }
+            this.setState({ loading: false });
+          });
       }
     });
   },
   render() {
+    const { loading } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.onSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
             <Input addonBefore={<Icon type="user" />} placeholder="Username" />,
@@ -44,7 +65,7 @@ const LoginForm = Form.create()(React.createClass({
             <Checkbox>Remember me</Checkbox>,
           )}
           <a className="login-form-forgot">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
             Log in
           </Button>
           Or <a>register now!</a>

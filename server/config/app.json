@@ -3,23 +3,13 @@
     "name": "MarX",
     "host": "localhost",
     "port": "9998",
-    "cookie": {
-      "httpOnly": true,
-      "maxAge": 604800000,
-      "rewrite": true,
-      "signed": true
-    }
+    "ttl": 604800000
   },
 
   "production": {
     "name": "MarX",
     "host": "localhost",
     "port": "9998",
-    "cookie": {
-      "httpOnly": true,
-      "maxAge": 604800000,
-      "rewrite": true,
-      "signed": true
-    }
+    "ttl": 604800000
   }
 }

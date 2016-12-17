@@ -9,7 +9,7 @@ import {
 import * as RawModels from './index';
 
 const ENV = process.env.NODE_ENV;
-const Logger = bunyan.createLogger({ name: mysqlConfig[ENV].database });
+const Logger = bunyan.createLogger({ name: `SQL[${mysqlConfig[ENV].database}]` });
 
 const sequelize = new Sequelize(
   mysqlConfig[ENV].database,

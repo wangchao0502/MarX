@@ -4,7 +4,7 @@
   "description": "这是一个全栈脚手架",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp | bunyan --time local",
+    "dev": "gulp | bunyan --time local -o short",
     "sync": "NODE_ENV=development node server/babel.sync.js",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "

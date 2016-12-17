@@ -1,17 +1,21 @@
 import autobind from 'autobind-decorator';
 import BaseController from './BaseController';
-import Router from '../filter/router';
+import router from '../filter/router';
+import authorize from '../filter/authorize';
 
 @autobind
-@Router.root('/')
+@router.root('/')
 export default class IndexController extends BaseController {
-  @Router.auto
+  @router.auto
+  @authorize
   async getIndexHtml(ctx) {
-    ctx.redirect('/login');
+    await ctx.render('Index', {
+      title: 'Welcome MarX',
+    });
   }
 
   async check(ctx, next) {
-    this.Logger.info('Check Check Check');
+    this.Logger.debug('Checking... Everything is OK');
     await next();
   }
 }

@@ -12,9 +12,12 @@ gulp.task('default', ['nodemon', 'browser-sync']);
 
 gulp.task('browser-sync', function() {
   setTimeout(function() {
-      browserSync.init({
+    browserSync.init({
       proxy: 'http://' + appConfig[ENV].host + ':' + appConfig[ENV].port + '/login',
       files: ['static/**/*.*', 'server/view/**/*.html'],
+      watchOptions: {
+        ignored: 'static/css/common/**/*.*',
+      },
       browser: 'google chrome',
       port: 54188,
       online: false,
