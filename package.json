@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp | bunyan --time local -o short",
+    "cluster": "gulp cluster | bunyan --time local -o short",
     "sync": "NODE_ENV=development node server/babel.sync.js",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "

@@ -16,6 +16,28 @@ try {
   Logger.error(err);
 }
 
+// loading runtime
 require('babel-register')(config);
 require('babel-polyfill');
-require('./app');
+
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster && process.env.NODE_CLUSTER) {
+  console.log('master start...');
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('listening', function(worker, address) {
+    console.log('worker [PID:' + worker.process.pid + '] listening');
+  });
+
+  cluster.on('exit', function(worker, code, signal) {
+    console.log('worker [PID:' + worker.process.pid + '] died');
+  });
+} else {
+  require('./app');
+}

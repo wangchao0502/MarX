@@ -10,6 +10,8 @@ const BROWSER_SYNC_RELOAD_DELAY = 10000;
 
 gulp.task('default', ['nodemon', 'browser-sync']);
 
+gulp.task('cluster', ['nodemon:cluster', 'browser-sync']);
+
 gulp.task('browser-sync', function() {
   setTimeout(function() {
     browserSync.init({
@@ -29,17 +31,22 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('nodemon', function(cb) {
-  let started = false;
   return nodemon({
     watch: ['server/**/*.js', 'server/**/*.json'],
     script: 'server/babel.app.js',
     env: {
       NODE_ENV: ENV,
     },
-  }).on('start', function() {
-    if (!started) {
-      cb();
-      started = true;
-    }
+  });
+});
+
+gulp.task('nodemon:cluster', function(cb) {
+  return nodemon({
+    watch: ['server/**/*.js', 'server/**/*.json'],
+    script: 'server/babel.app.js',
+    env: {
+      NODE_ENV: ENV,
+      NODE_CLUSTER: true
+    },
   });
 });
