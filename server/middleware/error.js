@@ -4,10 +4,13 @@ function errorMiddleware(msg) {
     ctx.status = msg;
     ctx.redirect(msg);
   } else {
-    ctx.body = {
-      code: -1,
-      msg,
-    };
+    let errorMsg = '';
+    if (msg instanceof Error) {
+      errorMsg = msg.message;
+    } else if (typeof msg === 'string' || typeof msg === 'object') {
+      errorMsg = msg;
+    }
+    ctx.body = { code: -1, msg: errorMsg };
   }
 }
 

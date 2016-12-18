@@ -5,7 +5,7 @@ import defaultRouter from '../router/default.json';
 import * as Controllers from '../controller/index';
 
 const router = new Router();
-const routerConfig = [];
+const routerConfig = {};
 /*
  * key is Controller name, value is a array with object
  * {
@@ -14,8 +14,18 @@ const routerConfig = [];
  * }
  */
 const defaultRouterConfig = {};
-// deal with defaultRouter
 
+const addRouterConfig = (item) => {
+  const { method } = item;
+  if (!routerConfig[method]) {
+    routerConfig[method] = [];
+  }
+  routerConfig[method].push(item);
+};
+
+const formatRouter = item => `[${item.method.toUpperCase()}] ${item.url} => ${item.ctrlName}.${item.fnName}`;
+
+// deal with defaultRouter
 Object.keys(defaultRouter).forEach((key) => {
   const [method, url] = key.split(' ');
   const [ctrlName, fnName] = defaultRouter[key].split('.');
@@ -33,20 +43,29 @@ Object.keys(Controllers).forEach((ctrlName) => {
 
   // load default router config first
   (defaultRouterConfig[ctrlName] || []).forEach((item) => {
-    routerConfig.push(`[${item.method.toUpperCase()}] ${item.url} => ${ctrlName}.${item.fnName}`);
+    addRouterConfig(Object.assign(item, { ctrlName }));
     router[item.method](item.url, controller[item.fnName]);
   });
 
-  $routes.forEach((item) => {
-    routerConfig.push(`[${item.method.toUpperCase()}] ${item.url} => ${ctrlName}.${item.fnName}`);
+  ($routes || []).forEach((item) => {
+    addRouterConfig(Object.assign(item, { ctrlName }));
     router[item.method](item.url, ...item.middleware, controller[item.fnName]);
   });
 });
 
+
 // write config into file
 const PRE_COMMENT = '# This file is auto generated when server is started.\n';
-routerConfig.unshift(PRE_COMMENT);
+const result = Object
+  .keys(routerConfig)
+  .sort((a, b) => a.length - b.length)
+  .map(key => routerConfig[key]
+    .map(item => formatRouter(item))
+    .sort((a, b) => a.length - b.length))
+  .reduce((prev, next) => prev.concat(next), []);
 
-fs.writeFile(path.join(__dirname, '../router/router.config'), routerConfig.join('\n'));
+result.unshift(PRE_COMMENT);
+
+fs.writeFile(path.join(__dirname, '../router/router.config'), result.join('\n'));
 
 export default router;

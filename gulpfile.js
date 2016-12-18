@@ -10,6 +10,8 @@ const BROWSER_SYNC_RELOAD_DELAY = 10000;
 
 gulp.task('default', ['nodemon', 'browser-sync']);
 
+gulp.task('dev:no-browser-sync', ['nodemon']);
+
 gulp.task('cluster', ['nodemon:cluster', 'browser-sync']);
 
 gulp.task('browser-sync', function() {

@@ -1,7 +1,13 @@
-const PREFIX = '$$route_';
+const PREFIX = '$$route';
 const exportMethod = {};
 // define absolute url
 exportMethod.full = {};
+
+const throwError = (msg) => {
+  throw new Error(msg);
+};
+
+const getFullTag = isFull => (isFull ? 'F' : '');
 
 function destruct(args) {
   const hasPath = typeof args[0] === 'string';
@@ -9,7 +15,7 @@ function destruct(args) {
   const middleware = hasPath ? args.slice(1) : args;
 
   if (middleware.some(m => typeof m !== 'function')) {
-    throw new Error('Middleware must be function');
+    throwError('Middleware must be function');
   }
 
   return [path, middleware];
@@ -18,18 +24,23 @@ function destruct(args) {
 // @route(method, path: optional, ...middleware: optional)
 function route(method, isFull, ...args) {
   if (typeof method !== 'string') {
-    throw new Error('The first argument must be an HTTP method');
+    throwError('The first argument must be an HTTP method');
   }
 
   const [path, middleware] = destruct(args);
 
   return (target, name) => {
-    target[`${PREFIX}${isFull ? '1' : '0'}${name}`] = { method, path, middleware };
+    const key = `${PREFIX}_${getFullTag(isFull)}_${name}`;
+    if (!target[key]) {
+      target[key] = [];
+    }
+    target[key].push({ key, method, path, middleware });
   };
 }
 
 // @[method](...args) === @route(method, ...args)
 const methods = ['get', 'post', 'put', 'patch', 'delete'];
+
 methods.forEach((method) => {
   exportMethod[method] = route.bind(null, method, false);
   exportMethod.full[method] = route.bind(null, method, true);
@@ -43,24 +54,21 @@ function baseAuto(target, name, descriptor, isFull) {
     const tail = keyChips[keyChips.length - 1];
 
     if (tail !== 'html' && tail !== 'json') {
-      throw new Error(`method ${name} should end with Html or Json`);
+      throwError(`method ${name} should end with Html or Json`);
     }
     if (keyChips.length < 3) {
-      throw new Error('method body is not right');
+      throwError('method body is not right');
     }
-    if (keyChips.length === 3 && keyChips[1] === 'index') {
-      keyChips[1] = '';
+    if (keyChips.length === 3 && keyChips[1] === 'index') keyChips[1] = '';
+
+    const path = `/${keyChips.slice(1, keyChips.length - 1).join(isFull ? '/' : '-')}`;
+    const key = `${PREFIX}_${getFullTag(isFull)}_${name}`;
+    if (!target[key]) {
+      target[key] = [];
     }
-    let path = '';
-    if (isFull) {
-      path = `/${keyChips.slice(1, keyChips.length - 1).join('/')}`;
-    } else {
-      path = `/${keyChips.slice(1, keyChips.length - 1).join('-')}`;
-    }
-    // add method into controller
-    target[`${PREFIX}${isFull ? '1' : '0'}${name}`] = { method, path, middleware: [] };
+    target[key].push({ key, method, path, middleware: [] });
   } else {
-    throw new Error(`method ${name} cannot match any legal word, please use follwing words: ${methods}`);
+    throwError(`method ${name} cannot match any legal word, please use follwing words: ${methods}`);
   }
 }
 
@@ -75,11 +83,12 @@ function controller(...args) {
     const proto = target.prototype;
     proto.$routes = Object.getOwnPropertyNames(proto)
       .filter(prop => prop.indexOf(PREFIX) === 0)
+      .map(prop => proto[prop])
+      .reduce((prev, next) => prev.concat(next), [])
       .map((prop) => {
-        const { method, path, middleware: actionMiddleware } = proto[prop];
+        const { key, method, path, middleware: actionMiddleware } = prop;
         const middleware = ctrlMiddleware.concat(actionMiddleware);
-        const fnName = prop.substring(PREFIX.length + 1);
-        const isFull = prop.charAt(PREFIX.length) === '1';
+        const [, isFull, fnName] = key.split('_');
         const url = `${isFull ? '' : ctrlPath}${path}`.replace(/\/\//g, '/');
         return { method, url, middleware, fnName };
       });
@@ -87,7 +96,7 @@ function controller(...args) {
 }
 
 exportMethod.auto = auto;
-exportMethod.full.auto = fullAuto;
 exportMethod.root = controller;
+exportMethod.full.auto = fullAuto;
 
 export default exportMethod;

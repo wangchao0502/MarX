@@ -6,8 +6,8 @@ import authorize from '../filter/authorize';
 @autobind
 @router.root('/')
 export default class IndexController extends BaseController {
-  @router.auto
   @authorize
+  @router.auto
   async getIndexHtml(ctx) {
     await ctx.render('Index', {
       title: 'Welcome MarX',
