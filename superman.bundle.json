@@ -1,0 +1,3 @@
+{
+  "reactBundle": ["react", "react-dom"]
+}

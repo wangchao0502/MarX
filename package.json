@@ -1,8 +1,8 @@
 {
-  "name": "MarX",
+  "name": "marx",
   "version": "0.0.1",
-  "description": "这是一个全栈脚手架",
-  "main": "index.js",
+  "description": "我是马克思，你们的精神领袖。",
+  "main": "",
   "scripts": {
     "dev": "gulp | bunyan --time local -o short",
     "cluster": "gulp cluster | bunyan --time local -o short",
@@ -13,9 +13,11 @@
   "author": "Raphael",
   "license": "ISC",
   "devDependencies": {
-    "@youzan/superman": "^0.1.27",
+    "@youzan/superman": "^0.2.1",
     "antd": "^2.5.2",
+    "antd-mobile": "^0.9.12",
     "babel-eslint": "^6.1.2",
+    "babel-plugin-import": "^1.1.0",
     "browser-sync": "^2.18.5",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",

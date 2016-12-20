@@ -28,18 +28,16 @@
   "cdn": {
     "basic": {
       "src": ["build/**/*.js", "build/**/*.css"],
-      "dist": "/FuckScaffold/build"
+      "dist": "/marx/build"
     }
   },
   "build": {
     "extra": {
-      "shims": "",
-      "paths": "",
-      "commonModule": "",
+      "commonModule": "superman.bundle.json",
       "appendEntry": true,
       "esVersion": 7,
       "sourceMap": false
     },
-    "confPath": ""
+    "confPath": "superman.webpack.js"
   }
 }
