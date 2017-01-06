@@ -6,7 +6,7 @@ const browserSync = require('browser-sync').create();
 const appConfig = require('./server/config/app.json');
 
 const ENV = 'development';
-const BROWSER_SYNC_RELOAD_DELAY = 10000;
+const BROWSER_SYNC_RELOAD_DELAY = 5000;
 
 gulp.task('default', ['nodemon', 'browser-sync']);
 
