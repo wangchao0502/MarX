@@ -41,7 +41,7 @@ Object.keys(Controllers).forEach((ctrlName) => {
   const controller = new Controllers[ctrlName]();
   const $routes = controller.$routes;
 
-  // load default router config first
+  // load default route config first
   (defaultRouterConfig[ctrlName] || []).forEach((item) => {
     addRouterConfig(Object.assign(item, { ctrlName }));
     router[item.method](item.url, controller[item.fnName]);

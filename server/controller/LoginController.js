@@ -1,19 +1,19 @@
 import autobind from 'autobind-decorator';
 import BaseController from './BaseController';
 import LoginService from '../service/LoginService';
-import router from '../filter/router';
+import route from '../filter/router';
 import appConfig from '../config/app.json';
 
 @autobind
-@router.root()
+@route.controller()
 export default class LoginController extends BaseController {
   constructor() {
     super();
     this.LoginService = new LoginService();
   }
 
-  @router.full.get('/login')
-  @router.full.get('/register')
+  @route.get('/login')
+  @route.get('/register')
   async getLoginHtml(ctx) {
     const { user } = ctx.session;
 
@@ -26,7 +26,7 @@ export default class LoginController extends BaseController {
     }
   }
 
-  @router.full.post('/login')
+  @route.post('/login')
   async login(ctx) {
     const { SUCCESS, LOGIN_ERROR } = ctx.CODE;
     const { username, password, remember = false } = ctx.request.body;
@@ -46,7 +46,7 @@ export default class LoginController extends BaseController {
     }
   }
 
-  @router.full.post('/register')
+  @route.post('/register')
   async register(ctx) {
     const { SUCCESS } = ctx.CODE;
     const { username, password } = ctx.request.body;
@@ -60,7 +60,7 @@ export default class LoginController extends BaseController {
     }
   }
 
-  @router.full.get('/logout')
+  @route.get('/logout')
   async logout(ctx) {
     ctx.session = null;
     ctx.redirect('login');

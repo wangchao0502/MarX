@@ -40,11 +40,7 @@ const sequelize = new Sequelize(
 );
 
 const rawRedis = Redis.createClient(redisConfig[ENV]);
-
-rawRedis.on('error', (err) => {
-  Logger.fatal(err, { database: 'redis' });
-
-});
+rawRedis.on('error', err => Logger.fatal(err, { database: 'redis' }));
 
 const redis = coRedis(rawRedis);
 

@@ -1,5 +1,6 @@
 const PREFIX = '$$route';
 const exportMethod = {};
+
 // define absolute url
 exportMethod.full = {};
 
@@ -96,7 +97,7 @@ function controller(...args) {
 }
 
 exportMethod.auto = auto;
-exportMethod.root = controller;
+exportMethod.controller = controller;
 exportMethod.full.auto = fullAuto;
 
 export default exportMethod;

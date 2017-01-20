@@ -14,15 +14,16 @@
   },
   "hash": [
     {
-      "dist": {
-        "js": "server/config/version_js.json",
-        "css": "server/config/version_css.json"
-      },
-      "template": {
-        "head": "{",
-        "record": "  \"<%= prefix %><%= name %>\": \"<%= path %>\"",
-        "foot": "}"
-      }
+      "src": "build/**/*.js",
+      "type": "json",
+      "dest": "server/config/version_js.json",
+      "recordTpl": "  \"<%= prefix %><%= name %>\": \"<%= path %>\""
+    },
+    {
+      "src": "build/**/*.css",
+      "type": "json",
+      "dest": "server/config/version_css.json",
+      "recordTpl": "  \"<%= prefix %><%= name %>\": \"<%= path %>\""
     }
   ],
   "cdn": {

@@ -1,27 +1,27 @@
 import autobind from 'autobind-decorator';
 import BaseController from './BaseController';
-import router from '../filter/router';
+import route from '../filter/router';
 import authorize from '../filter/authorize';
 
 @autobind
-@router.root('/')
+@route.controller()
 export default class IndexController extends BaseController {
   @authorize
-  @router.auto
+  @route.auto
   async getIndexHtml(ctx) {
     await ctx.render('Index', {
       title: 'Welcome MarX',
     });
   }
 
-  @router.full.auto
+  @route.auto
   async getWhoIsYourDaddyJson(ctx) {
     ctx.json({
       name: 'Raphael',
     });
   }
 
-  @router.full.get('/show/me/the/money')
+  @route.full.get('/show/me/the/money')
   async getFunnyJson(ctx) {
     ctx.json({
       minerals: 10000,
@@ -29,7 +29,7 @@ export default class IndexController extends BaseController {
     });
   }
 
-  @router.get('/games/list.json')
+  @route.get('/games/list.json')
   async getGamesListJson(ctx) {
     ctx.json([
       '星际争霸',
