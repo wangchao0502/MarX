@@ -4,8 +4,9 @@ import bunyan from 'bunyan';
 import { app as appConfig } from './config/index';
 import middleware from './middleware/index';
 
-const Logger = bunyan.createLogger({ name: 'app' });
-const ENV = process.env.NODE_ENV;
+const Logger   = bunyan.createLogger({ name: 'app' });
+const ENV      = process.env.NODE_ENV;
+const isProd   = ENV === 'production';
 const APP_NAME = appConfig[ENV].name;
 const APP_PORT = appConfig[ENV].port;
 
@@ -19,9 +20,15 @@ app.use(middleware.body);
 app.use(middleware.code);
 app.use(middleware.json);
 app.use(middleware.error);
-app.use(middleware.render);
 app.use(middleware.session);
 app.use(middleware.staticServer);
+app.use(middleware.render({
+  filters: {
+    shorten: (str, count) => str.slice(0, count || 5),
+  },
+  noCache: !isProd,
+  watch: !isProd,
+}));
 app.use(convert(router.routes()));
 app.use(convert(router.allowedMethods()));
 
