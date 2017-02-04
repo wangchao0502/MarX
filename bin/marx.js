@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 
-var fs      = require('fs');
-var path    = require('path');
-var chalk   = require('chalk');
-var program = require('commander');
-var pkgJson = require('../package.json');
+const fs      = require('fs');
+const path    = require('path');
+const chalk   = require('chalk');
+const program = require('commander');
+const pkgJson = require('../package.json');
 
 const log     = console.log;
 const curPath = process.cwd();
@@ -32,7 +32,6 @@ program
   .option('-c, --controller <controller>')
   .alias('r')
   .action(function(url, options) {
-
     fs.readFile(routerConfigPath, 'utf8', function(err, data) {
       if (err) {
         log(chalk.red('router.config file cannot find, please excute `npm run dev` to generate it.'));
@@ -56,7 +55,9 @@ program
         ];
         if (list) {
           log(chalk.red('\nRouter List:\n'));
-          log(chalk.green(routerList.map((r, index) => `${index}: ${r}`).join('\n')));
+          log(chalk.green(
+            routerList.map((r, index) => `${index}: ${r}`).join('\n')
+          ));
         }
         if (find) {
           log(chalk.red('\nFind Result:\n'));
