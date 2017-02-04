@@ -3,11 +3,13 @@
 
 const fs      = require('fs');
 const vfs     = require('vinyl-fs');
+const tpl     = require('./util/tpl');
 const path    = require('path');
 const spawn   = require('child_process').spawn;
 const chalk   = require('chalk');
 const through = require('through2');
 const program = require('commander');
+const padding = require('./util/padding');
 const pkgJson = require('../package.json');
 
 const log     = console.log;
@@ -18,23 +20,11 @@ const curPath = process.cwd();
 const routerConfigPath = path.resolve(curPath,   'server/router/router.config');
 const ctrlIxTargetPath = path.resolve(curPath,   'server/controller/index.js');
 const modeIxTargetPath = path.resolve(curPath,   'server/model/index.js');
-
 const ctrlTemplatePath = path.resolve(__dirname, './template/controller.js.template');
 const ctrxTemplatePath = path.resolve(__dirname, './template/controller.index.js.template');
 const servTemplatePath = path.resolve(__dirname, './template/service.js.template');
 const modeTemplatePath = path.resolve(__dirname, './template/model.js.template');
 const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
-
-function get(path, obj, fb) {
-  return path.split('.').reduce((res, key) => res[key] || fb || `$\{${path}}`, obj);
-}
-
-function parseTpl(template, map, fallback) {
-  return template.replace(/\$\{.+?}/g, (match) => {
-    const path = match.substr(2, match.length - 3).trim();
-    return get(path, map, fallback);
-  });
-}
 
 program.version(pkgJson.version);
 
@@ -77,7 +67,7 @@ Open a new command session and typing:
   npm run build
   
 Happy hacking!`));
-    }
+    };
 
     log(chalk.red(`Creating a new MarX app in ${name}...\n`));
 
@@ -136,15 +126,15 @@ program
         log(chalk.green(`create ${servTargetPath.replace(curPath + '/', '')}`));
         log(chalk.green(`create ${modeTargetPath.replace(curPath + '/', '')}`));
 
-        fs.writeFile(ctrlTargetPath, parseTpl(ctrlTemplate, params));
-        fs.writeFile(servTargetPath, parseTpl(servTemplate, params));
-        fs.writeFile(modeTargetPath, parseTpl(modeTemplate, params));
+        fs.writeFile(ctrlTargetPath, tpl(ctrlTemplate, params));
+        fs.writeFile(servTargetPath, tpl(servTemplate, params));
+        fs.writeFile(modeTargetPath, tpl(modeTemplate, params));
 
         // update index
         const reappend = (fileData, data) => fileData.indexOf(data) === -1 ? fileData + data : fileData;
 
-        fs.writeFile(ctrlIxTargetPath, reappend(ctrxFileData, parseTpl(ctrxTemplate, params)), showErr);
-        fs.writeFile(modeIxTargetPath, reappend(modxFileData, parseTpl(modxTemplate, params)), showErr);
+        fs.writeFile(ctrlIxTargetPath, reappend(ctrxFileData, tpl(ctrxTemplate, params)), showErr);
+        fs.writeFile(modeIxTargetPath, reappend(modxFileData, tpl(modxTemplate, params)), showErr);
 
         break;
       case 'test':
@@ -208,7 +198,7 @@ program
         if (list) {
           log(chalk.red('\nRouter List:\n'));
           log(chalk.green(
-            routerList.map((r, index) => `${index}: ${r}`).join('\n')
+            routerList.map((r, index) => `${padding(index + 1, 3, '0', 'left')}: ${r}`).join('\n')
           ));
         }
         if (find) {
