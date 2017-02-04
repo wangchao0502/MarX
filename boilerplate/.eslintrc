@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "globals": {
+    "window": true,
+    "document": true
+  },
+  "rules": {
+    "no-multi-spaces": "off",
+    "no-mixed-operators": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "react/prop-types": "off",
+    "react/prefer-es6-class": "off",
+    "react/jsx-filename-extension": "off",
+    "class-methods-use-this": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off"
+  }
+}

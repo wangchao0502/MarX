@@ -1,4 +1,4 @@
-const Account = (sequelize, DataTypes) =>
+const Account = (sequelize, DataTypes) => (
   sequelize.define('Account', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
@@ -18,6 +18,7 @@ const Account = (sequelize, DataTypes) =>
       defaultValue: '',
       comment: '登陆密码',
     },
-  });
+  })
+);
 
 export default Account;

@@ -11,9 +11,6 @@
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "
   },
-  "bin": {
-    "marx": "./bin/marx.js"
-  },
   "author": "Raphael",
   "license": "ISC",
   "devDependencies": {
@@ -45,9 +42,7 @@
     "babel-preset-stage-1": "^6.16.0",
     "babel-register": "^6.18.0",
     "bunyan": "^1.8.5",
-    "chalk": "^1.1.3",
     "co-redis": "^2.1.1",
-    "commander": "~2.9.0",
     "koa": "^2.0.0",
     "koa-body": "^1.6.0",
     "koa-convert": "^1.2.0",
@@ -61,8 +56,6 @@
     "random-name": "^0.1.2",
     "redis": "^2.6.3",
     "sequelize": "^3.27.0",
-    "superagent": "^3.3.0",
-    "through2": "~2.0.3",
-    "vinyl-fs": "~2.4.4"
+    "superagent": "^3.3.0"
   }
 }

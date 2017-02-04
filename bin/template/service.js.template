@@ -1,0 +1,6 @@
+import BaseService from './BaseService';
+import { Models } from '../model/model';
+
+export default class ${ModelName}Service extends BaseService {
+
+}

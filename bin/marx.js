@@ -2,9 +2,11 @@
 'use strict';
 
 const fs      = require('fs');
+const vfs     = require('vinyl-fs');
 const path    = require('path');
 const spawn   = require('child_process').spawn;
 const chalk   = require('chalk');
+const through = require('through2');
 const program = require('commander');
 const pkgJson = require('../package.json');
 
@@ -19,15 +21,96 @@ program.version(pkgJson.version);
 program
   .command('create [name]')
   .description('create marx app')
-  .action((name) => {
-    log('create new app named', name || 'marx-demo');
-    // TODO: build project
+  .option('-s, --silence')
+  .alias('c')
+  .action((name, options) => {
+    name = name || 'marx-demo';
+
+    const boil = path.join(__dirname, '../boilerplate');
+    const dest = path.join(process.cwd(), name);
+    const template = function(dest, boil) {
+      return through.obj(function(file, enc, cb) {
+        if (!file.stat.isFile()) {
+          return cb();
+        }
+
+        log(chalk.green(`create ${file.path.replace(boil + '/', '')}`));
+        this.push(file);
+        cb();
+      });
+    }
+    const printSuccess = () => {
+      log(chalk.blue(`
+Success! Created ${name} at ${dest}.
+
+Inside that directory, you can run several commands:
+  * npm start: Starts the development server.
+  * npm run build: Bundles the app into dist for production.
+  * npm test: Run test.
+  
+We suggest that you begin by typing:
+  cd ${dest}
+  npm start
+  
+Open a new command session and typing:
+  npm run build
+  
+Happy hacking!`));
+    }
+
+    log(chalk.red(`Creating a new MarX app in ${name}...\n`));
+
+    vfs.src('**/*', { cwd: boil, cwdbase: true, dot: true })
+      .pipe(template(dest, boil))
+      .pipe(vfs.dest(dest))
+      .on('end', function() {
+        if (options.silence) {
+          printSuccess();
+        } else {
+          log(chalk.red('\nRunning ynpm install...\n'));
+
+          process.chdir(name);
+
+          // fast install node-sass
+          const env = Object.create(process.env);
+          env.SASS_BINARY_SITE = 'https://npm.taobao.org/mirrors/node-sass/';
+          spawn('npm', ['install', 'node-sass'], { stdio: 'inherit', env: env })
+            .on('close', () => {
+              // use ynpm install
+              spawn('npm', ['install', '--registry=http://registry.npm.qima-inc.com'], { stdio: 'inherit' })
+                .on('close', () => {
+                  printSuccess();
+                });
+            });
+        }
+      })
+      .resume();
+  });
+
+// marx generate
+program
+  .command('generate [type] [name]')
+  .description('generate model/service/controller')
+  .alias('g')
+  .action((type, name) => {
+    log(`generate ${type} ${name}`);
+    switch (type) {
+      case 'module':
+        break;
+      case 'test':
+        break;
+      default:
+        log(chalk.red(`"${type}" is not valid type, only support module and test.`));
+    }
+
+    // TODO: generate code
   });
 
 // marx dev
 program
   .command('dev')
   .description('run dev server')
+  .alias('d')
   .action(() => {
     const gulp = spawn('gulp',   ['--color']);
     const blog = spawn('bunyan', ['--color', '--time', 'local', '-o', 'short']);
