@@ -89,11 +89,11 @@ model:      Account, User
 
 ~~○ 支持yo-generator生成~~
 
-○ 开发MarX-CLI(不依赖yo)
+● 开发MarX-CLI(不依赖yo)
 
-○ 通过命令展示／查询 url对应的Controller和Action
+● 通过命令展示／查询 url对应的Controller和Action
 
-○ 支持命令行自动生成前端代码，controller代码，service代码
+● 支持命令行自动生成前端代码，controller代码，service代码
 
 ○ 支持unit test
 
