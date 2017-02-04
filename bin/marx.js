@@ -11,9 +11,30 @@ const program = require('commander');
 const pkgJson = require('../package.json');
 
 const log     = console.log;
+const noop    = () => {};
+const showErr = err => err && log(chalk.red(err));
 const curPath = process.cwd();
 
-const routerConfigPath = path.resolve(curPath, 'server/router/router.config');
+const routerConfigPath = path.resolve(curPath,   'server/router/router.config');
+const ctrlIxTargetPath = path.resolve(curPath,   'server/controller/index.js');
+const modeIxTargetPath = path.resolve(curPath,   'server/model/index.js');
+
+const ctrlTemplatePath = path.resolve(__dirname, './template/controller.js.template');
+const ctrxTemplatePath = path.resolve(__dirname, './template/controller.index.js.template');
+const servTemplatePath = path.resolve(__dirname, './template/service.js.template');
+const modeTemplatePath = path.resolve(__dirname, './template/model.js.template');
+const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
+
+function get(path, obj, fb) {
+  return path.split('.').reduce((res, key) => res[key] || fb || `$\{${path}}`, obj);
+}
+
+function parseTpl(template, map, fallback) {
+  return template.replace(/\$\{.+?}/g, (match) => {
+    const path = match.substr(2, match.length - 3).trim();
+    return get(path, map, fallback);
+  });
+}
 
 program.version(pkgJson.version);
 
@@ -68,7 +89,6 @@ Happy hacking!`));
           printSuccess();
         } else {
           log(chalk.red('\nRunning ynpm install...\n'));
-
           process.chdir(name);
 
           // fast install node-sass
@@ -93,9 +113,39 @@ program
   .description('generate model/service/controller')
   .alias('g')
   .action((type, name) => {
-    log(`generate ${type} ${name}`);
     switch (type) {
       case 'module':
+        // TODO: uppercase check
+        const ctrlTemplate = fs.readFileSync(ctrlTemplatePath, 'utf8');
+        const ctrxTemplate = fs.readFileSync(ctrxTemplatePath, 'utf8');
+        const servTemplate = fs.readFileSync(servTemplatePath, 'utf8');
+        const modeTemplate = fs.readFileSync(modeTemplatePath, 'utf8');
+        const modxTemplate = fs.readFileSync(modxTemplatePath, 'utf8');
+
+        // old index file data
+        const ctrxFileData = fs.readFileSync(ctrlIxTargetPath, 'utf8');
+        const modxFileData = fs.readFileSync(modeIxTargetPath, 'utf8');
+
+        const params       = { ModelName: name };
+        // write file
+        const ctrlTargetPath = path.resolve(curPath, `server/controller/${name}Controller.js`);
+        const servTargetPath = path.resolve(curPath, `server/service/${name}Service.js`);
+        const modeTargetPath = path.resolve(curPath, `server/model/${name}.js`);
+
+        log(chalk.green(`create ${ctrlTargetPath.replace(curPath + '/', '')}`));
+        log(chalk.green(`create ${servTargetPath.replace(curPath + '/', '')}`));
+        log(chalk.green(`create ${modeTargetPath.replace(curPath + '/', '')}`));
+
+        fs.writeFile(ctrlTargetPath, parseTpl(ctrlTemplate, params));
+        fs.writeFile(servTargetPath, parseTpl(servTemplate, params));
+        fs.writeFile(modeTargetPath, parseTpl(modeTemplate, params));
+
+        // update index
+        const reappend = (fileData, data) => fileData.indexOf(data) === -1 ? fileData + data : fileData;
+
+        fs.writeFile(ctrlIxTargetPath, reappend(ctrxFileData, parseTpl(ctrxTemplate, params)), showErr);
+        fs.writeFile(modeIxTargetPath, reappend(modxFileData, parseTpl(modxTemplate, params)), showErr);
+
         break;
       case 'test':
         break;
