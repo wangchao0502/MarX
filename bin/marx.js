@@ -3,6 +3,7 @@
 
 const fs      = require('fs');
 const path    = require('path');
+const spawn   = require('child_process').spawn;
 const chalk   = require('chalk');
 const program = require('commander');
 const pkgJson = require('../package.json');
@@ -18,9 +19,27 @@ program.version(pkgJson.version);
 program
   .command('create [name]')
   .description('create marx app')
-  .action(function(name) {
-    console.log('create new app named', name || 'marx-demo');
+  .action((name) => {
+    log('create new app named', name || 'marx-demo');
     // TODO: build project
+  });
+
+// marx dev
+program
+  .command('dev')
+  .description('run dev server')
+  .action(() => {
+    const gulp = spawn('gulp',   ['--color']);
+    const blog = spawn('bunyan', ['--color', '--time', 'local', '-o', 'short']);
+
+    blog.stdout.setEncoding('utf8');
+    gulp.stdout.on('data', data => blog.stdin.write(data));
+    blog.stdout.on('data', data => {
+      const lines = data.toString().split('\n');
+      for (let i = 0; i < lines.length - 1; i++) {
+        log(lines[i]);
+      }
+    });
   });
 
 // marx route
@@ -31,8 +50,8 @@ program
   .option('-m, --method <method>')
   .option('-c, --controller <controller>')
   .alias('r')
-  .action(function(url, options) {
-    fs.readFile(routerConfigPath, 'utf8', function(err, data) {
+  .action((url, options) => {
+    fs.readFile(routerConfigPath, 'utf8', (err, data) => {
       if (err) {
         log(chalk.red('router.config file cannot find, please excute `npm run dev` to generate it.'));
       }

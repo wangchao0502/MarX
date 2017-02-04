@@ -4,8 +4,8 @@
   "description": "我是马克思，你们的精神领袖。",
   "main": "./lib/index.js",
   "scripts": {
-    "dev": "gulp | bunyan --time local -o short",
-    "cluster": "gulp cluster | bunyan --time local -o short",
+    "dev": "gulp --color | bunyan --time local -o short",
+    "cluster": "gulp cluster --color | bunyan --time local -o short",
     "sync": "NODE_ENV=development node server/babel.sync.js",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "
