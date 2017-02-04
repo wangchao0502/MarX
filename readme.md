@@ -30,13 +30,23 @@
 以下两个命令分别在两个bash窗口执行，`npm run dev`启动开发环境的node服务，
 `npm run build`启动实时打包功能。
 
-> npm run dev
+> npm run dev 或 npm start
 
 > npm run build
 
 如果遇到类似下面的提示，请运行`npm rebuild`命令重新编译相关依赖包
 
 > Module version mismatch. Expected 48, got 46
+
+## cli
+
+```bash
+create|c [options] [name]  create marx app
+generate|g [type] [name]   generate model/service/controller
+dev|d                      run dev server
+route|r [options] [url]  
+```
+
 
 ## 脚手架设计思路
 
