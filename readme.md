@@ -105,6 +105,8 @@ model:      Account, User
 
 ● 支持命令行自动生成前端代码，controller代码，service代码
 
+○ 将一些filter，base，middleware代码放到marx的lib中
+
 ○ 支持unit test
 
 ○ 支持自动生成文档
