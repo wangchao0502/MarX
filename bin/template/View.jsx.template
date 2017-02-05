@@ -1,0 +1,12 @@
+import React from 'react';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+
+const View = () => (
+  <Router history={browserHistory}>
+    <Route path="${ModelNameLowerCase}">
+      <IndexRoute component={null} />
+    </Route>
+  </Router>
+);
+
+export default View;

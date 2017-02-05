@@ -1,17 +1,19 @@
+import route from '../filter/router';
 import autobind from 'autobind-decorator';
+import authorize from '../filter/authorize';
 import BaseController from './BaseController';
 import ${ModelName}Service from '../service/${ModelName}Service';
-import route from '../filter/router';
 
 @autobind
-@route.controller('${ModelName}')
+@route.controller('/${ModelNameLowerCase}')
 export default class ${ModelName}Controller extends BaseController {
   constructor() {
     super();
     this.${ModelName}Service = new ${ModelName}Service();
   }
 
-  @route.get('/')
+  @authorize
+  @route.get()
   async get${ModelName}Html(ctx) {
     await ctx.render('${ModelName}', {
       title: '${ModelName} page',

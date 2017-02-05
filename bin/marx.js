@@ -7,6 +7,7 @@ const tpl     = require('./util/tpl');
 const path    = require('path');
 const spawn   = require('child_process').spawn;
 const chalk   = require('chalk');
+const string  = require('./util/string');
 const through = require('through2');
 const program = require('commander');
 const padding = require('./util/padding');
@@ -116,7 +117,11 @@ program
         const ctrxFileData = fs.readFileSync(ctrlIxTargetPath, 'utf8');
         const modxFileData = fs.readFileSync(modeIxTargetPath, 'utf8');
 
-        const params       = { ModelName: name };
+        const params = {
+          ModelName: name,
+          ModelNameLowerCase: string.camelToSplitName(name)
+        };
+        console.log(string.camelToSplitName(name));
         // write file
         const ctrlTargetPath = path.resolve(curPath, `server/controller/${name}Controller.js`);
         const servTargetPath = path.resolve(curPath, `server/service/${name}Service.js`);
@@ -142,8 +147,6 @@ program
       default:
         log(chalk.red(`"${type}" is not valid type, only support module and test.`));
     }
-
-    // TODO: generate code
   });
 
 // marx dev

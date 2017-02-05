@@ -1,3 +1,5 @@
+'use strict';
+
 const padding = (string, length, patch, direction) => {
   string = String(string);
   const count = length - string.length;

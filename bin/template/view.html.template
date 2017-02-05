@@ -1,0 +1,15 @@
+{% extends './layout/BaseLayout.html' %}
+
+{% block title %} {{ title }} - 有赞 {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/css/${ModelNameLowerCase}.css">
+{% endblock %}
+
+{% block content %}
+<div id="app"></div>
+{% endblock %}
+
+{% block script %}
+<script src="/js/${ModelNameLowerCase}.js" charset="utf-8"></script>
+{% endblock %}
