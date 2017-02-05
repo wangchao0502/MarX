@@ -17,6 +17,22 @@ const camelToSplitName = (camelName, split) => {
   return result;
 };
 
+const isCamelStyle = string => {
+  for (let i = 0, l = string.length; i < l; i++) {
+    const char = string.charAt(i);
+    // first char is not upper case
+    if (!i && !(char <= 'Z' && char >= 'A')) {
+      return false;
+    }
+    // include extra character
+    if (char > 'Z' || char < 'a') {
+      return false;
+    }
+  }
+  return true;
+}
+
 module.exports = {
-  camelToSplitName
+  camelToSplitName,
+  isCamelStyle
 };

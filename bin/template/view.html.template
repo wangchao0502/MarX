@@ -1,6 +1,6 @@
 {% extends './layout/BaseLayout.html' %}
 
-{% block title %} {{ title }} - 有赞 {% endblock %}
+{% block title %} {{ title }} - MarX {% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="/css/${ModelNameLowerCase}.css">
@@ -11,5 +11,6 @@
 {% endblock %}
 
 {% block script %}
+<script src="/js/reactBundle.js" charset="utf-8"></script>
 <script src="/js/${ModelNameLowerCase}.js" charset="utf-8"></script>
 {% endblock %}

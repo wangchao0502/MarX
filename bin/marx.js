@@ -18,13 +18,10 @@ const noop    = () => {};
 const showErr = err => err && log(chalk.red(err));
 const curPath = process.cwd();
 
-const routerConfigPath = path.resolve(curPath,   'server/router/router.config');
-const ctrlIxTargetPath = path.resolve(curPath,   'server/controller/index.js');
-const modeIxTargetPath = path.resolve(curPath,   'server/model/index.js');
-const ctrlTemplatePath = path.resolve(__dirname, './template/controller.js.template');
+const routerConfigPath = path.resolve(curPath, 'server/router/router.config');
+const ctrlIxTargetPath = path.resolve(curPath, 'server/controller/index.js');
+const modeIxTargetPath = path.resolve(curPath, 'server/model/index.js');
 const ctrxTemplatePath = path.resolve(__dirname, './template/controller.index.js.template');
-const servTemplatePath = path.resolve(__dirname, './template/service.js.template');
-const modeTemplatePath = path.resolve(__dirname, './template/model.js.template');
 const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
 
 program.version(pkgJson.version);
@@ -106,34 +103,57 @@ program
   .action((type, name) => {
     switch (type) {
       case 'module':
-        // TODO: uppercase check
-        const ctrlTemplate = fs.readFileSync(ctrlTemplatePath, 'utf8');
-        const ctrxTemplate = fs.readFileSync(ctrxTemplatePath, 'utf8');
-        const servTemplate = fs.readFileSync(servTemplatePath, 'utf8');
-        const modeTemplate = fs.readFileSync(modeTemplatePath, 'utf8');
-        const modxTemplate = fs.readFileSync(modxTemplatePath, 'utf8');
+        if (string.isCamelStyle(name)) {
+          log(chalk.red('Module name should be camel style.'));
+          return;
+        }
+
+        const splitName = string.camelToSplitName(name);
+        const params = {
+          ModelName: name,
+          ModelNameLowerCase: splitName
+        };
+
+        const newDirectory = [
+          `client/js/src/${splitName}`,
+          `client/js/src/${splitName}/components`,
+          `client/js/src/${splitName}/style`,
+        ];
+
+        const templateToPath = {
+          './template/controller.js.template': `server/controller/${name}Controller.js`,
+          './template/service.js.template'   : `server/service/${name}Service.js`,
+          './template/model.js.template'     : `server/model/${name}.js`,
+          './template/view.html.template'    : `server/view/${name}.html`,
+          './template/main.js.template'      : `client/js/src/${splitName}/main.js`,
+          './template/View.jsx.template'     : `client/js/src/${splitName}/components/View.jsx`,
+          './template/base.scss.template'    : `client/js/src/${splitName}/style/${splitName}.scss`,
+        };
+
+        // create client folder
+        for (let dir of newDirectory) {
+          try {
+            fs.mkdirSync(path.resolve(curPath, dir));
+          } catch (e) {
+            log(chalk.red(`Client side folder ${dir} has existed.`));
+          }
+        }
+
+        // write file
+        for (let templatePath in templateToPath) {
+          const template   = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
+          const targetPath = path.resolve(curPath, templateToPath[templatePath]);
+
+          log(chalk.green(`create ${targetPath.replace(curPath + '/', '')}`));
+          fs.writeFile(targetPath, tpl(template, params));
+        }
 
         // old index file data
         const ctrxFileData = fs.readFileSync(ctrlIxTargetPath, 'utf8');
         const modxFileData = fs.readFileSync(modeIxTargetPath, 'utf8');
 
-        const params = {
-          ModelName: name,
-          ModelNameLowerCase: string.camelToSplitName(name)
-        };
-        console.log(string.camelToSplitName(name));
-        // write file
-        const ctrlTargetPath = path.resolve(curPath, `server/controller/${name}Controller.js`);
-        const servTargetPath = path.resolve(curPath, `server/service/${name}Service.js`);
-        const modeTargetPath = path.resolve(curPath, `server/model/${name}.js`);
-
-        log(chalk.green(`create ${ctrlTargetPath.replace(curPath + '/', '')}`));
-        log(chalk.green(`create ${servTargetPath.replace(curPath + '/', '')}`));
-        log(chalk.green(`create ${modeTargetPath.replace(curPath + '/', '')}`));
-
-        fs.writeFile(ctrlTargetPath, tpl(ctrlTemplate, params));
-        fs.writeFile(servTargetPath, tpl(servTemplate, params));
-        fs.writeFile(modeTargetPath, tpl(modeTemplate, params));
+        const ctrxTemplate = fs.readFileSync(ctrxTemplatePath, 'utf8');
+        const modxTemplate = fs.readFileSync(modxTemplatePath, 'utf8');
 
         // update index
         const reappend = (fileData, data) => fileData.indexOf(data) === -1 ? fileData + data : fileData;
