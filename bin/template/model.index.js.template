@@ -1,1 +1,1 @@
-export { default as ${ModelName} } from './${ModelName}';
+Models.${ModelName} = require('./${ModelName}')(sequelize, Sequelize);
