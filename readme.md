@@ -124,3 +124,7 @@ model:      Account, User
 ○ 支持性能监控
 
 ○ 开发自己的ORM，替换sequelize
+
+### LINKS
+
+[SaaS系统12原则](https://12factor.net/zh_cn/)
