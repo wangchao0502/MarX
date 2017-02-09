@@ -1,7 +1,7 @@
+import BaseController from '@youzan/marx/base/controller';
 import route from '../filter/router';
 import autobind from 'autobind-decorator';
 import authorize from '../filter/authorize';
-import BaseController from './BaseController';
 import ${ModelName}Service from '../service/${ModelName}Service';
 
 @autobind

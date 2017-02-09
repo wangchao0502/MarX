@@ -1,5 +1,5 @@
+import BaseController from '@youzan/marx/base/controller';
 import autobind from 'autobind-decorator';
-import BaseController from './BaseController';
 import route from '../filter/router';
 import authorize from '../filter/authorize';
 
