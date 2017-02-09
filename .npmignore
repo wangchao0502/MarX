@@ -6,7 +6,6 @@ build/
 dump.rdb
 yarn-error.log
 boilerplate/
-bin/
 src/
 .eslintrc
 .eslintignore
