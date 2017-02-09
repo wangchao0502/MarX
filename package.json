@@ -1,5 +1,5 @@
 {
-  "name": "marx",
+  "name": "@youzan/marx",
   "version": "0.0.1",
   "description": "我是马克思，你们的精神领袖。",
   "main": "./lib/index.js",
