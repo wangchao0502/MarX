@@ -6,3 +6,7 @@ npm-debug.log
 build/
 dump.rdb
 yarn-error.log
+
+base/
+filter/
+middleware/

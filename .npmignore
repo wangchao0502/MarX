@@ -1,0 +1,15 @@
+.idea/
+node_modules/
+static/
+npm-debug.log
+build/
+dump.rdb
+yarn-error.log
+boilerplate/
+bin/
+src/
+.eslintrc
+.eslintignore
+.babelrc
+.editorconfig
+.gitignore
