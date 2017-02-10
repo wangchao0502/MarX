@@ -8,7 +8,7 @@ const routerConfig = {};
 const controllers  = {};
 
 const controllerDirPath = path.join(cwd, 'server/controller');
-const defaultRouterPath = path.join(cwd, 'server/router.default.json');
+const defaultRouterPath = path.join(cwd, 'server/router/default.json');
 const routerConfigPath  = path.join(cwd, 'server/router/router.config');
 
 fs.readdirSync(controllerDirPath).forEach((file) => {
