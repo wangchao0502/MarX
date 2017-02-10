@@ -1,0 +1,18 @@
+{
+  "SUCCESS": {
+    "code": 0,
+    "msg": "Ok"
+  },
+  "ERROR": {
+    "code": -1,
+    "msg": "Error"
+  },
+  "NEED_AUTH": {
+    "code": 999,
+    "msg": "Permission Denied"
+  },
+  "LOGIN_ERROR": {
+    "code": 100,
+    "msg": "Login username or password is wrong"
+  }
+}

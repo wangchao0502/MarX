@@ -1,5 +1,5 @@
 import BaseService from '@youzan/marx/base/service';
-import { Models } from '../model/model';
+import { Models } from '../model/index';
 
 export default class LoginService extends BaseService {
 

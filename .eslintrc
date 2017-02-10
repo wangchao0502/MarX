@@ -3,9 +3,11 @@
   "parser": "babel-eslint",
   "globals": {
     "window": true,
-    "document": true
+    "document": true,
+    "require": true
   },
   "rules": {
+    "global-require": "off",
     "no-multi-spaces": "off",
     "no-mixed-operators": "off",
     "no-param-reassign": ["error", { "props": false }],
@@ -13,6 +15,7 @@
     "react/prefer-es6-class": "off",
     "react/jsx-filename-extension": "off",
     "class-methods-use-this": "off",
+    "import/no-dynamic-require": "off",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off"
   }

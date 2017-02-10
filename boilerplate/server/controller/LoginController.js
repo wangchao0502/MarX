@@ -1,7 +1,7 @@
+import route from '@youzan/marx/filter/route';
+import autobind from '@youzan/marx/filter/autobind';
 import BaseController from '@youzan/marx/base/controller';
-import autobind from 'autobind-decorator';
 import LoginService from '../service/LoginService';
-import route from '../filter/router';
 import appConfig from '../config/app.json';
 
 @autobind

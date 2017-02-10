@@ -1,8 +1,16 @@
-import Koa from 'koa';
-import convert from 'koa-convert';
-import bunyan from 'bunyan';
-import { app as appConfig } from './config/index';
-import middleware from './middleware/index';
+import Koa               from 'koa';
+import convert           from 'koa-convert';
+import bunyan            from 'bunyan';
+import catchMiddleware   from '@youzan/marx/middleware/catch';
+import bodyMiddleware    from '@youzan/marx/middleware/body';
+import codeMiddleware    from '@youzan/marx/middleware/code';
+import jsonMiddleware    from '@youzan/marx/middleware/json';
+import errorMiddleware   from '@youzan/marx/middleware/error';
+import sessionMiddleware from '@youzan/marx/middleware/session';
+import staticMiddleware  from '@youzan/marx/middleware/static';
+import renderMiddleware  from '@youzan/marx/middleware/render';
+import routerMiddleware  from '@youzan/marx/middleware/router';
+import appConfig         from './config/app.json';
 
 const Logger   = bunyan.createLogger({ name: 'app' });
 const ENV      = process.env.NODE_ENV;
@@ -11,26 +19,25 @@ const APP_NAME = appConfig[ENV].name;
 const APP_PORT = appConfig[ENV].port;
 
 const app = new Koa();
-const router = middleware.router;
 // set for session
 app.keys = [APP_NAME];
 
-app.use(middleware.tryCatch);
-app.use(middleware.body);
-app.use(middleware.code);
-app.use(middleware.json);
-app.use(middleware.error);
-app.use(middleware.session);
-app.use(middleware.staticServer);
-app.use(middleware.render({
+app.use(catchMiddleware);
+app.use(bodyMiddleware);
+app.use(codeMiddleware);
+app.use(jsonMiddleware);
+app.use(errorMiddleware);
+app.use(sessionMiddleware);
+app.use(staticMiddleware);
+app.use(renderMiddleware({
   filters: {
     shorten: (str, count) => str.slice(0, count || 5),
   },
   noCache: !isProd,
   watch: !isProd,
 }));
-app.use(convert(router.routes()));
-app.use(convert(router.allowedMethods()));
+app.use(convert(routerMiddleware.routes()));
+app.use(convert(routerMiddleware.allowedMethods()));
 
 app.listen(APP_PORT, () => {
   Logger.info(`${APP_NAME} is running, port: ${APP_PORT}`);

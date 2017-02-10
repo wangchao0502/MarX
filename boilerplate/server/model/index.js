@@ -2,10 +2,8 @@ import Redis from 'redis';
 import coRedis from 'co-redis';
 import bunyan from 'bunyan';
 import Sequelize from 'sequelize';
-import {
-  mysql as mysqlConfig,
-  redis as redisConfig,
-} from '../config/index';
+import mysqlConfig from '../config/mysql.json';
+import redisConfig from '../config/redis.json';
 
 const ENV = process.env.NODE_ENV;
 const Logger = bunyan.createLogger({ name: `SQL[${mysqlConfig[ENV].database}]` });
