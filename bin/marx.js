@@ -22,8 +22,46 @@ const curPath = process.cwd();
 const routerConfigPath = path.resolve(curPath, 'server/router/router.config');
 const marxReConfigPath = path.resolve(curPath, 'marx.json');
 const modeIxTargetPath = path.resolve(curPath, 'server/model/index.js');
-const pkJsonTargetPath = path.resolve(curPath, 'package.json');
 const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
+
+const createDir = (curPath, dir) => {
+  for (let dir of dir) {
+    try {
+      fs.mkdirSync(path.resolve(curPath, dir));
+    } catch (e) {
+      log(chalk.red(`Client side folder ${dir} has existed.`));
+    }
+  }
+};
+
+const createTemplate = (curPath, templateMap, params) => {
+  for (let templatePath in templateMap) {
+    const template   = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
+    const targetPath = path.resolve(curPath, templateMap[templatePath]);
+
+    log(chalk.green(`create ${targetPath.replace(curPath + '/', '')}`));
+    fs.writeFile(targetPath, tpl(template, params));
+  }
+};
+
+const printSuccess = (name, dest) => {
+  log(chalk.blue(`
+Success! Created ${name} at ${dest}.
+
+Inside that directory, you can run several commands:
+  * npm start: Starts the development server.
+  * npm run build: Bundles the app into dist for production.
+  * npm test: Run test.
+  
+We suggest that you begin by typing:
+  cd ${dest}
+  npm start
+  
+Open a new command session and typing:
+  npm run build
+  
+Happy hacking!`));
+};
 
 program.version(version);
 
@@ -49,24 +87,6 @@ program
         cb();
       });
     }
-    const printSuccess = () => {
-      log(chalk.blue(`
-Success! Created ${name} at ${dest}.
-
-Inside that directory, you can run several commands:
-  * npm start: Starts the development server.
-  * npm run build: Bundles the app into dist for production.
-  * npm test: Run test.
-  
-We suggest that you begin by typing:
-  cd ${dest}
-  npm start
-  
-Open a new command session and typing:
-  npm run build
-  
-Happy hacking!`));
-    };
 
     log(chalk.red(`Creating a new MarX app in ${name}...\n`));
 
@@ -74,15 +94,15 @@ Happy hacking!`));
       .pipe(template(dest, boil))
       .pipe(vfs.dest(dest))
       .on('end', function() {
-        // update package.json
-        log(chalk.green('update package.json'));
-        const newPackageJson = Object.assign({}, pkgJson);
-        newPackageJson.name = name;
-        newPackageJson.dependencies['@youzan/marx'] = `^${version}`;
-        fs.writeFile(pkJsonTargetPath, JSON.stringify(newPackageJson, null, '  '), showErr);
+        const params = { name, version };
+        const templateMap = {
+          './template/package.json.template': `${name}/package.json`
+        };
+
+        createTemplate(curPath, templateMap, params);
 
         if (options.silence) {
-          printSuccess();
+          printSuccess(name, dest);
         } else {
           log(chalk.red('\nRunning ynpm install...\n'));
           process.chdir(name);
@@ -95,7 +115,7 @@ Happy hacking!`));
               // use ynpm install
               spawn('npm', ['install', '--registry=http://registry.npm.qima-inc.com'], { stdio: 'inherit' })
                 .on('close', () => {
-                  printSuccess();
+                  printSuccess(name, dest);
                 });
             });
         }
@@ -117,6 +137,7 @@ program
         }
 
         const splitName = string.camelToSplitName(name);
+
         const params = {
           ModelName: name,
           ModelNameLowerCase: splitName
@@ -128,7 +149,7 @@ program
           `client/js/src/${splitName}/style`,
         ];
 
-        const templateToPath = {
+        const templateMap = {
           './template/controller.js.template': `server/controller/${name}Controller.js`,
           './template/service.js.template'   : `server/service/${name}Service.js`,
           './template/model.js.template'     : `server/model/${name}.js`,
@@ -138,23 +159,8 @@ program
           './template/base.scss.template'    : `client/js/src/${splitName}/style/${splitName}.scss`,
         };
 
-        // create client folder
-        for (let dir of newDirectory) {
-          try {
-            fs.mkdirSync(path.resolve(curPath, dir));
-          } catch (e) {
-            log(chalk.red(`Client side folder ${dir} has existed.`));
-          }
-        }
-
-        // write file
-        for (let templatePath in templateToPath) {
-          const template   = fs.readFileSync(path.resolve(__dirname, templatePath), 'utf8');
-          const targetPath = path.resolve(curPath, templateToPath[templatePath]);
-
-          log(chalk.green(`create ${targetPath.replace(curPath + '/', '')}`));
-          fs.writeFile(targetPath, tpl(template, params));
-        }
+        createDir(curPath, newDirectory);
+        createTemplate(curPath, templateMap, params);
 
         // old index file data
         const modxTemplate = fs.readFileSync(modxTemplatePath, 'utf8');
