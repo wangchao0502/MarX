@@ -1,5 +1,7 @@
 {
   "name": "${name}",
+  "description": "${name} build by MarX",
+  "license": "ISC",
   "scripts": {
     "start": "gulp --color | bunyan --time local -o short",
     "dev": "gulp --color | bunyan --time local -o short",
