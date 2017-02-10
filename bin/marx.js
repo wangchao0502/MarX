@@ -16,14 +16,16 @@ const pkgJson = require('../package.json');
 const log     = console.log;
 const noop    = () => {};
 const showErr = err => err && log(chalk.red(err));
+const version = pkgJson.version;
 const curPath = process.cwd();
 
 const routerConfigPath = path.resolve(curPath, 'server/router/router.config');
 const marxReConfigPath = path.resolve(curPath, 'marx.json');
 const modeIxTargetPath = path.resolve(curPath, 'server/model/index.js');
+const pkJsonTargetPath = path.resolve(curPath, 'package.json');
 const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
 
-program.version(pkgJson.version);
+program.version(version);
 
 // marx create
 program
@@ -72,6 +74,13 @@ Happy hacking!`));
       .pipe(template(dest, boil))
       .pipe(vfs.dest(dest))
       .on('end', function() {
+        // update package.json
+        log(chalk.green('update package.json'));
+        const newPackageJson = Object.assign({}, pkgJson);
+        newPackageJson.name = name;
+        newPackageJson.dependencies['@youzan/marx'] = `^${version}`;
+        fs.writeFile(pkJsonTargetPath, JSON.stringify(newPackageJson, null, '  '), showErr);
+
         if (options.silence) {
           printSuccess();
         } else {

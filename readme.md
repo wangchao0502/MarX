@@ -107,6 +107,8 @@ model:      Account, User
 
 ○ 将一些filter，base，middleware代码放到marx的lib中
 
+○ 动态配置boilerplate的package.json版本
+
 ○ babel启动搞得优雅一点
 
 ○ 支持unit test

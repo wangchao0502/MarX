@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build": "mkdir base filter middleware || true && find src -name '*.js' | sed -e 's/^src\\///g' | xargs -t -I {} babel src/{} --out-file {}"
