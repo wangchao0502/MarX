@@ -24,8 +24,8 @@ const marxReConfigPath = path.resolve(curPath, 'marx.json');
 const modeIxTargetPath = path.resolve(curPath, 'server/model/index.js');
 const modxTemplatePath = path.resolve(__dirname, './template/model.index.js.template');
 
-const createDir = (curPath, dir) => {
-  for (let dir of dir) {
+const createDir = (curPath, dirs) => {
+  for (let dir of dirs) {
     try {
       fs.mkdirSync(path.resolve(curPath, dir));
     } catch (e) {
@@ -43,6 +43,8 @@ const createTemplate = (curPath, templateMap, params) => {
     fs.writeFile(targetPath, tpl(template, params));
   }
 };
+
+const append = (fileData, data) => fileData.indexOf(data) === -1 ? fileData + data : fileData;
 
 const printSuccess = (name, dest) => {
   log(chalk.blue(`
