@@ -1,0 +1,11 @@
+import path from 'path';
+
+const cwd  = process.cwd();
+const CODE = require(path.join(cwd, 'server/config/code'));
+
+const code = async (ctx, next) => {
+  ctx.CODE = CODE;
+  await next();
+};
+
+export default code;
