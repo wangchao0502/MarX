@@ -89,7 +89,8 @@ const create = (name, options) => {
 
   copyFiles(boilPath, destPath, () => {
     tpl.createTemplate(cwd, {
-      './template/package.json.template': `${name}/package.json`
+      './template/package.json.template': `${name}/package.json`,
+      './template/app.json.template': `${name}/server/config/app.json`
     }, { name, version });
 
     if (options.silence) {

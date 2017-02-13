@@ -1,6 +1,6 @@
 {
   "development": {
-    "name": "MarX",
+    "name": "${name}",
     "host": "localhost",
     "port": "9998",
     "cookie": {
@@ -12,7 +12,7 @@
   },
 
   "production": {
-    "name": "MarX",
+    "name": "${name}",
     "host": "localhost",
     "port": "9998",
     "cookie": {

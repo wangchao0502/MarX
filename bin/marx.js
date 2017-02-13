@@ -28,6 +28,12 @@ program
   .alias('d')
   .action(() => require('./marx-run')());
 
+// marx dashboard
+program
+  .command('dashboard')
+  .description('show running status in a dashboard')
+  .action(() => require('./marx-dashboard'));
+
 // marx route
 program
   .command('route [url]')
