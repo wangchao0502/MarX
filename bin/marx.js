@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+const path    = require('path');
 const program = require('commander');
 const pkgJson = require('../package.json');
 
@@ -43,5 +44,18 @@ program
   .option('-c, --controller <controller>')
   .alias('r')
   .action((url, options) => require('./marx-route')(url, options));
+
+// marx babel
+program
+  .command('babel [file]')
+  .option('-c, --cluster')
+  .alias('b')
+  .action((file, options) => require('./marx-babel')(file, options));
+
+// marx babel
+program
+  .command('sync')
+  .alias('s')
+  .action(() => require('./marx-babel')(path.resolve(__dirname, './marx-sync')));
 
 program.parse(process.argv);

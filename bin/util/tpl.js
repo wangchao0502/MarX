@@ -14,6 +14,7 @@ const parseTpl = (template, map, fallback) => {
 const createDir = (curPath, dirs) => {
   for (let dir of dirs) {
     try {
+      log(chalk.green(`mkdir ${dir}`));
       fs.mkdirSync(path.resolve(curPath, dir));
     } catch (e) {
       log(chalk.red(`Client side folder ${dir} has existed.`));

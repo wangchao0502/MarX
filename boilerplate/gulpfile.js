@@ -20,35 +20,39 @@ gulp.task('browser-sync', function() {
       proxy: 'http://' + appConfig[ENV].host + ':' + appConfig[ENV].port + '/login',
       files: ['static/**/*.*', 'server/view/**/*.html'],
       watchOptions: {
-        ignored: 'static/css/common/**/*.*',
+        ignored: 'static/css/common/**/*.*'
       },
       browser: 'google chrome',
       port: 54188,
       online: false,
       notify: false,
-      scrollProportionally: false,
+      scrollProportionally: false
     });
   }, BROWSER_SYNC_RELOAD_DELAY);
-
 });
 
 gulp.task('nodemon', function(cb) {
   return nodemon({
     watch: ['server/**/*.js', 'server/**/*.json'],
-    script: 'server/babel.app.js',
-    env: {
-      NODE_ENV: ENV,
+    script: 'server/app.js',
+    execMap: {
+      js: 'marx babel'
     },
+    env: {
+      NODE_ENV: ENV
+    }
   });
 });
 
 gulp.task('nodemon:cluster', function(cb) {
   return nodemon({
     watch: ['server/**/*.js', 'server/**/*.json'],
-    script: 'server/babel.app.js',
-    env: {
-      NODE_ENV: ENV,
-      NODE_CLUSTER: true
+    script: 'server/app.js',
+    execMap: {
+      js: 'marx babel --cluster'
     },
+    env: {
+      NODE_ENV: ENV
+    }
   });
 });

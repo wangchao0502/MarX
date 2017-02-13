@@ -109,6 +109,8 @@ model:      Account, User
 
 ● 动态配置boilerplate的package.json版本
 
+● 支持dashboard启动应用
+
 ○ babel启动搞得优雅一点
 
 ○ 支持unit test

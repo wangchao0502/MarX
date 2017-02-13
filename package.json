@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build": "mkdir base filter middleware || true && ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}"
@@ -11,6 +11,13 @@
   "author": "Raphael",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-plugin-add-module-exports": "~0.2.1",
+    "babel-plugin-transform-decorators-legacy": "~1.3.4",
+    "babel-polyfill": "~6.22.0",
+    "babel-preset-es2015": "~6.22.0",
+    "babel-preset-stage-0": "~6.22.0",
+    "babel-register": "~6.22.0",
     "blessed": "~0.1.81",
     "blessed-contrib": "~4.7.5",
     "bunyan": "~1.8.5",
@@ -29,8 +36,6 @@
   "devDependencies": {
     "babel-cli": "~6.22.2",
     "babel-eslint": "~7.1.1",
-    "babel-preset-es2015": "~6.22.0",
-    "babel-preset-stage-0": "~6.22.0",
     "eslint": "~3.15.0",
     "eslint-config-airbnb": "~14.1.0",
     "eslint-plugin-import": "~2.2.0",
