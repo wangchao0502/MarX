@@ -1,4 +1,4 @@
-import { Models } from './model/model';
+import { Models } from './model/index';
 
 Object.keys(Models).forEach((key) => {
   Models[key].sync();
