@@ -105,9 +105,9 @@ model:      Account, User
 
 ● 支持命令行自动生成前端代码，controller代码，service代码
 
-○ 将一些filter，base，middleware代码放到marx的lib中
+● 将一些filter，base，middleware代码放到marx的lib中
 
-○ 动态配置boilerplate的package.json版本
+● 动态配置boilerplate的package.json版本
 
 ○ babel启动搞得优雅一点
 
