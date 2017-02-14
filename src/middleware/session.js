@@ -6,7 +6,7 @@ import convert from 'koa-convert';
 const ENV = process.env.NODE_ENV;
 const cwd = process.cwd();
 
-const appConfig   = process.env.npm_package_config;
+const appConfig   = require(path.join(cwd, 'package.json')).config;
 const redisConfig = require(path.join(cwd, 'server/config/redis'));
 
 const sessionMiddleware = convert(session({

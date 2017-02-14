@@ -3,8 +3,8 @@
   "description": "${name} build by MarX",
   "license": "ISC",
   "scripts": {
-    "start:server": "marx babel server/app.js | bunyan --time local -o short",
-    "start:server:cluster": "marx babel --cluster server/app.js | bunyan --time local -o short",
+    "start:server": "nodemon --exec 'marx babel' -w 'server/**/*.*' -e 'js,json' server/app.js | bunyan --time local -o short",
+    "start:server:cluster": "nodemon --exec 'marx babel --cluster' -w 'server/**/*.*' -e 'js,json' server/app.js | bunyan --time local -o short",
     "start:client": "browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.html' -b 'google chrome' --port $npm_package_config_bsport",
     "start": "NODE_ENV=development run-p start:server start:client",
     "cluster": "NODE_ENV=development run-p start:server:cluster start:client",
@@ -37,7 +37,6 @@
     "co-redis": "^2.1.1",
     "koa": "^2.0.0",
     "koa-convert": "^1.2.0",
-    "mysql": "^2.12.0",
     "redis": "^2.6.3",
     "sequelize": "^3.27.0",
     "superagent": "^3.3.0"
