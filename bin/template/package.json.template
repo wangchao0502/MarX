@@ -8,6 +8,7 @@
     "start:client": "browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.html' -b 'google chrome' --port $npm_package_config_bsport",
     "start": "NODE_ENV=development run-p start:server start:client",
     "cluster": "NODE_ENV=development run-p start:server:cluster start:client",
+    "dashboard": "NODE_ENV=development marx dashboard",
     "sync": "NODE_ENV=development marx sync | bunyan --time local -o short",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "

@@ -87,14 +87,11 @@ const serverRunning = (data) => {
 };
 
 const serverRun = () => {
-  const gulp = spawn('gulp',   ['--color']);
-  const blog = spawn('bunyan', ['--color', '--time', 'local', '-o', 'short']);
+  const start = spawn('npm', ['run', 'start']);
 
-  blog.stdout.setEncoding('utf8');
-  gulp.stdout.on('data', data => blog.stdin.write(data));
-  gulp.stderr.on('data', data => blog.stderr.write(data));
-  blog.stdout.on('data', serverStaring);
-  blog.stderr.on('data', serverCrashing);
+  start.stdout.setEncoding('utf8');
+  start.stdout.on('data', serverStaring);
+  start.stderr.on('data', serverCrashing);
 };
 
 const buildRun = () => {

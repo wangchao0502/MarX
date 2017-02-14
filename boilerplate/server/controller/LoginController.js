@@ -2,7 +2,7 @@ import route from '@youzan/marx/filter/route';
 import autobind from '@youzan/marx/filter/autobind';
 import BaseController from '@youzan/marx/base/controller';
 import LoginService from '../service/LoginService';
-import appConfig from '../config/app.json';
+import { config as appConfig } from '../../package.json';
 
 @autobind
 @route.controller()
