@@ -1,8 +1,8 @@
-import route from '@youzan/marx/filter/route';
-import autobind from '@youzan/marx/filter/autobind';
+import route          from '@youzan/marx/filter/route';
+import autobind       from '@youzan/marx/filter/autobind';
 import BaseController from '@youzan/marx/base/controller';
-import LoginService from '../service/LoginService';
-import { config as appConfig } from '../../package.json';
+import LoginService   from '../service/LoginService';
+import redisConfig    from '../config/redis.json';
 
 @autobind
 @route.controller()
@@ -35,7 +35,7 @@ export default class LoginController extends BaseController {
       const account = await this.LoginService.loginCheck(username, password);
 
       if (account) {
-        ctx.session.cookie.maxAge = remember ? appConfig[process.env.NODE_ENV].cookie.maxAge : null;
+        ctx.session.cookie.maxAge = remember ? redisConfig[process.env.NODE_ENV].cookie.maxAge : null;
         ctx.session.user = account;
         ctx.json(SUCCESS);
       } else {

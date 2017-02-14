@@ -1,7 +1,7 @@
-import Redis from 'redis';
-import coRedis from 'co-redis';
-import bunyan from 'bunyan';
-import Sequelize from 'sequelize';
+import Redis       from 'redis';
+import coRedis     from 'co-redis';
+import bunyan      from 'bunyan';
+import Sequelize   from 'sequelize';
 import mysqlConfig from '../config/mysql.json';
 import redisConfig from '../config/redis.json';
 

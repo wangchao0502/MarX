@@ -1,11 +1,23 @@
 {
   "development": {
     "host": "127.0.0.1",
-    "port": "6379"
+    "port": "6379",
+    "cookie": {
+      "httpOnly": true,
+      "maxAge": 604800000,
+      "rewrite": true,
+      "signed": true
+    }
   },
 
   "production": {
     "host": "127.0.0.1",
-    "port": "6379"
+    "port": "6379",
+    "cookie": {
+      "httpOnly": true,
+      "maxAge": 604800000,
+      "rewrite": true,
+      "signed": true
+    }
   }
 }

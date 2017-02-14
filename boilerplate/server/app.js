@@ -1,6 +1,7 @@
 import Koa               from 'koa';
-import convert           from 'koa-convert';
 import bunyan            from 'bunyan';
+import convert           from 'koa-convert';
+import pkgJson           from '../package.json';
 import catchMiddleware   from '@youzan/marx/middleware/catch';
 import bodyMiddleware    from '@youzan/marx/middleware/body';
 import codeMiddleware    from '@youzan/marx/middleware/code';
@@ -11,11 +12,12 @@ import staticMiddleware  from '@youzan/marx/middleware/static';
 import renderMiddleware  from '@youzan/marx/middleware/render';
 import routerMiddleware  from '@youzan/marx/middleware/router';
 
+
 const Logger   = bunyan.createLogger({ name: 'app' });
 const ENV      = process.env.NODE_ENV;
 const isProd   = ENV === 'production';
-const APP_NAME = process.env.npm_package_config[ENV].name;
-const APP_PORT = process.env.npm_package_config[ENV].port;
+const APP_NAME = pkgJson.name;
+const APP_PORT = pkgJson.config[ENV].port;
 
 const app = new Koa();
 

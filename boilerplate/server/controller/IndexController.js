@@ -1,6 +1,6 @@
-import route from '@youzan/marx/filter/route';
-import autobind from '@youzan/marx/filter/autobind';
-import authorize from '@youzan/marx/filter/authorize';
+import route          from '@youzan/marx/filter/route';
+import autobind       from '@youzan/marx/filter/autobind';
+import authorize      from '@youzan/marx/filter/authorize';
 import BaseController from '@youzan/marx/base/controller';
 
 @autobind

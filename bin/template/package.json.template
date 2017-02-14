@@ -3,8 +3,8 @@
   "description": "${name} build by MarX",
   "license": "ISC",
   "scripts": {
-    "start:server": "nodemon --exec 'marx babel' -w 'server/**/*.*' -e 'js,json' server/app.js | bunyan --time local -o short",
-    "start:server:cluster": "nodemon --exec 'marx babel --cluster' -w 'server/**/*.*' -e 'js,json' server/app.js | bunyan --time local -o short",
+    "start:server": "nodemon --exec 'marx babel' -w server -e 'js json' server/app.js | bunyan --time local -o short",
+    "start:server:cluster": "nodemon --exec 'marx babel --cluster' -w 'server/**/*.*' -e 'js json' server/app.js | bunyan --time local -o short",
     "start:client": "browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.html' -b 'google chrome' --port $npm_package_config_bsport",
     "start": "NODE_ENV=development run-p start:server start:client",
     "cluster": "NODE_ENV=development run-p start:server:cluster start:client",
@@ -46,23 +46,11 @@
     "bsport": 54188,
     "development": {
       "host": "localhost",
-      "port": "9998",
-      "cookie": {
-        "httpOnly": true,
-        "maxAge": 604800000,
-        "rewrite": true,
-        "signed": true
-      }
+      "port": "9998"
     },
     "production": {
       "host": "localhost",
-      "port": "9998",
-      "cookie": {
-        "httpOnly": true,
-        "maxAge": 604800000,
-        "rewrite": true,
-        "signed": true
-      }
+      "port": "9998"
     }
   }
 }
