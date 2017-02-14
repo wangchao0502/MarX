@@ -3,7 +3,9 @@
   "version": "0.0.18",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
-    "build": "mkdir base filter middleware || true && ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}"
+    "build:mkdir": "mkdir base filter middleware || true",
+    "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}",
+    "build": "npm run build:mkdir && npm run build:compiler"
   },
   "bin": {
     "marx": "./bin/marx.js"
@@ -29,6 +31,7 @@
     "koa-redis": "~2.1.3",
     "koa-router": "~7.0.1",
     "koa-static": "~2.0.0",
+    "npm-run-all": "~4.0.1",
     "nunjucks": "~3.0.0",
     "through2": "~2.0.3",
     "vinyl-fs": "~2.4.4"

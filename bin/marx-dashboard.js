@@ -5,11 +5,8 @@ const spawn   = require('child_process').spawn;
 const blessed = require('blessed');
 const contrib = require('blessed-contrib');
 
-const cwd     = process.cwd();
 const screen  = blessed.screen();
-const pkgJson = require(path.resolve(cwd, 'package.json'));
-const name    = pkgJson.name;
-
+const name    = process.env.npm_package_name;
 
 // descript the app's status
 const STATUS  = {

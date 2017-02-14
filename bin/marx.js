@@ -22,13 +22,6 @@ program
   .alias('g')
   .action((type, name) => require('./marx-generate')(type, name));
 
-// marx dev
-program
-  .command('dev')
-  .description('run dev server')
-  .alias('d')
-  .action(() => require('./marx-run')());
-
 // marx dashboard
 program
   .command('dashboard')

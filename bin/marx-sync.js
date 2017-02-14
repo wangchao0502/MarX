@@ -1,7 +1,5 @@
 'use strict';
 
-process.env.NODE_ENV = 'development';
-
 const log    = console.log;
 const cwd    = process.cwd();
 const path   = require('path');

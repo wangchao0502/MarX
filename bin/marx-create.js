@@ -7,11 +7,10 @@ const path    = require('path');
 const spawn   = require('child_process').spawn;
 const chalk   = require('chalk');
 const through = require('through2');
-const pkgJson = require('../package.json');
 
 const cwd     = process.cwd();
 const log     = console.log;
-const version = pkgJson.version;
+const version = process.env.npm_package_version;
 
 const successLog = (name, dest) => {
   log(chalk.blue(`
@@ -89,8 +88,7 @@ const create = (name, options) => {
 
   copyFiles(boilPath, destPath, () => {
     tpl.createTemplate(cwd, {
-      './template/package.json.template': `${name}/package.json`,
-      './template/app.json.template': `${name}/server/config/app.json`
+      './template/package.json.template': `${name}/package.json`
     }, { name, version });
 
     if (options.silence) {

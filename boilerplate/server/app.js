@@ -10,15 +10,15 @@ import sessionMiddleware from '@youzan/marx/middleware/session';
 import staticMiddleware  from '@youzan/marx/middleware/static';
 import renderMiddleware  from '@youzan/marx/middleware/render';
 import routerMiddleware  from '@youzan/marx/middleware/router';
-import appConfig         from './config/app.json';
 
 const Logger   = bunyan.createLogger({ name: 'app' });
 const ENV      = process.env.NODE_ENV;
 const isProd   = ENV === 'production';
-const APP_NAME = appConfig[ENV].name;
-const APP_PORT = appConfig[ENV].port;
+const APP_NAME = process.env.npm_package_config[ENV].name;
+const APP_PORT = process.env.npm_package_config[ENV].port;
 
 const app = new Koa();
+
 // set for session
 app.keys = [APP_NAME];
 

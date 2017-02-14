@@ -3,10 +3,12 @@
   "description": "${name} build by MarX",
   "license": "ISC",
   "scripts": {
-    "start": "marx dev",
-    "dev": "marx dev",
-    "cluster": "marx babel --cluster server/app.js | bunyan --time local -o short",
-    "sync": "marx sync | bunyan --time local -o short",
+    "start:server": "marx babel server/app.js | bunyan --time local -o short",
+    "start:server:cluster": "marx babel --cluster server/app.js | bunyan --time local -o short",
+    "start:client": "browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.html' -b 'google chrome' --port $npm_package_config_bsport",
+    "start": "NODE_ENV=development run-p start:server start:client",
+    "cluster": "NODE_ENV=development run-p start:server:cluster start:client",
+    "sync": "NODE_ENV=development marx sync | bunyan --time local -o short",
     "build": "superman build",
     "deploy": "superman build pre && superman hash && superman cdn "
   },
@@ -22,9 +24,9 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
-    "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1",
     "node-sass": "^3.13.0",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0"
@@ -39,5 +41,28 @@
     "redis": "^2.6.3",
     "sequelize": "^3.27.0",
     "superagent": "^3.3.0"
+  },
+  "config": {
+    "bsport": 54188,
+    "development": {
+      "host": "localhost",
+      "port": "9998",
+      "cookie": {
+        "httpOnly": true,
+        "maxAge": 604800000,
+        "rewrite": true,
+        "signed": true
+      }
+    },
+    "production": {
+      "host": "localhost",
+      "port": "9998",
+      "cookie": {
+        "httpOnly": true,
+        "maxAge": 604800000,
+        "rewrite": true,
+        "signed": true
+      }
+    }
   }
 }
