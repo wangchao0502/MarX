@@ -1,0 +1,39 @@
+{
+  "project": {
+    "projectName": "${name}",
+    "js": {
+      "src": "client/js/src",
+      "local": "static/js",
+      "build": "build/js"
+    },
+    "css": {
+      "src": "client/sass",
+      "local": "static/css",
+      "build": "build/css"
+    }
+  },
+  "hash": [{
+    "src": "build/**/*.js",
+    "type": "json",
+    "dest": "server/config/version_js.json",
+    "recordTpl": "  \"<%= name %>.js\": \"<%= path %>.js\""
+  }, {
+    "src": "build/**/*.css",
+    "type": "json",
+    "dest": "server/config/version_css.json",
+    "recordTpl": "  \"<%= name %>.css\": \"<%= path %>.css\""
+  }],
+  "cdn": {
+    "basic": {
+      "src": ["build/**/*.js", "build/**/*.css"],
+      "dist": "/${name}/build"
+    }
+  },
+  "build": {
+    "extra": {
+      "appendEntry": true,
+      "esVersion": 7,
+      "sourceMap": false
+    }
+  }
+}

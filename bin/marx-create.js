@@ -56,7 +56,6 @@ const copyFiles = (dirName, dest, cb) => {
     .resume();
 };
 
-
 const nodeSassInstall = (cb) => {
   log(chalk.red('\nRunning node-sass fast install...\n'));
 
@@ -89,7 +88,8 @@ const create = (name, options) => {
 
   copyFiles(boilPath, destPath, () => {
     tpl.createTemplate(cwd, {
-      './template/package.json.template': `${name}/package.json`
+      './template/package.json.template': `${name}/package.json`,
+      './template/superman.json.template': `${name}/superman.json`
     }, { name, version });
 
     if (options.silence) {

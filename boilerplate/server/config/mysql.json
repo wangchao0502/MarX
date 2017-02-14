@@ -10,8 +10,8 @@
   "production": {
     "host": "127.0.0.1",
     "port": "3306",
-    "username": "admin",
-    "password": "admin",
+    "username": "root",
+    "password": "05021213",
     "database": "test"
   }
 }

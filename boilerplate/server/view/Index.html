@@ -3,7 +3,7 @@
 {% block title %} {{ title }} - 有赞 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="{{ 'css/index.css' | css }}">
 {% endblock %}
 
 {% block content %}
@@ -47,5 +47,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="/js/index.js" charset="utf-8"></script>
+<script src="{{ 'js/index.js' | js }}" charset="utf-8"></script>
 {% endblock %}

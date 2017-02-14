@@ -2,6 +2,8 @@ import Koa               from 'koa';
 import bunyan            from 'bunyan';
 import convert           from 'koa-convert';
 import pkgJson           from '../package.json';
+import jsCDN             from './config/version_js.json';
+import cssCDN            from './config/version_css.json';
 import catchMiddleware   from '@youzan/marx/middleware/catch';
 import bodyMiddleware    from '@youzan/marx/middleware/body';
 import codeMiddleware    from '@youzan/marx/middleware/code';
@@ -12,12 +14,12 @@ import staticMiddleware  from '@youzan/marx/middleware/static';
 import renderMiddleware  from '@youzan/marx/middleware/render';
 import routerMiddleware  from '@youzan/marx/middleware/router';
 
-
 const Logger   = bunyan.createLogger({ name: 'app' });
 const ENV      = process.env.NODE_ENV;
 const isProd   = ENV === 'production';
 const APP_NAME = pkgJson.name;
 const APP_PORT = pkgJson.config[ENV].port;
+const CDN_HOST = `https://b.yzcdn.cn/${APP_NAME}/`;
 
 const app = new Koa();
 
@@ -33,7 +35,8 @@ app.use(sessionMiddleware);
 app.use(staticMiddleware);
 app.use(renderMiddleware({
   filters: {
-    shorten: (str, count) => str.slice(0, count || 5),
+    js: name => (isProd ? `${CDN_HOST}${jsCDN[name]}` : `/${name}`),
+    css: name => (isProd ? `${CDN_HOST}${cssCDN[name]}` : `/${name}`),
   },
   noCache: !isProd,
   watch: !isProd,
