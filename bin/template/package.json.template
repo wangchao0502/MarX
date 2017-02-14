@@ -5,7 +5,7 @@
   "scripts": {
     "start:server": "nodemon --exec 'marx babel' -w server -e 'js json' server/app.js | bunyan --time local -o short",
     "start:server:cluster": "nodemon --exec 'marx babel --cluster' -w 'server/**/*.*' -e 'js json' server/app.js | bunyan --time local -o short",
-    "start:client": "sleep 5 && browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.html' -b 'google chrome' --port $npm_package_config_bsport",
+    "start:client": "sleep 5 && browser-sync start -p $npm_package_config_development_host:$npm_package_config_development_port -f 'static/**/*.* server/view/**/*.njk' -b 'google chrome' --port $npm_package_config_bsport",
     "start": "NODE_ENV=development run-p start:server start:client",
     "pre": "NODE_ENV=production marx babel server/app.js | bunyan --time local -o short",
     "cluster": "NODE_ENV=development run-p start:server:cluster start:client",

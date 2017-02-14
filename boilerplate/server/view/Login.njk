@@ -1,9 +1,9 @@
-{% extends './layout/LoginLayout.html' %}
+{% extends './layout/LoginLayout.njk' %}
 
 {% block title %} {{title}} - 有赞 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ 'css/login.css' | css }}">
+<link rel="stylesheet" href={{ "css/login.css" | css }}>
 {% endblock %}
 
 {% block content %}
@@ -11,5 +11,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ 'js/login.js' | js }}" charset="utf-8"></script>
+<script src={{ "js/login.js" | js }} charset="utf-8"></script>
 {% endblock %}

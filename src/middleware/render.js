@@ -24,7 +24,7 @@ const createEnv = (opts) => {
 const renderMiddleware = (opts) => {
   // 创建Nunjucks的env对象:
   const env = createEnv(opts);
-  const ext = opts.ext || '.html';
+  const ext = opts.ext || '.njk';
   return async (ctx, next) => {
     // 给ctx绑定render函数:
     ctx.render = (view, model) => {
