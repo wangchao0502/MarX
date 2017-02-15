@@ -52,8 +52,7 @@ const copyFiles = (dirName, dest, cb) => {
   vfs.src('**/*', { cwd: dirName, cwdbase: true, dot: true })
     .pipe(tplMiddleware(dest, dirName))
     .pipe(vfs.dest(dest))
-    .on('end', () => cb && cb())
-    .resume();
+    .on('end', () => cb && cb());
 };
 
 const nodeSassInstall = (cb) => {
