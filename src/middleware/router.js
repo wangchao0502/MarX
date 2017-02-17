@@ -4,6 +4,7 @@ import Router from 'koa-router';
 
 const cwd          = process.cwd();
 const router       = new Router();
+const noop         = () => {};
 const routerConfig = {};
 const controllers  = {};
 
@@ -78,6 +79,6 @@ const result = Object
 
 result.unshift(PRE_COMMENT);
 
-fs.writeFile(routerConfigPath, result.join('\n'));
+fs.writeFile(routerConfigPath, result.join('\n'), noop);
 
 export default router;

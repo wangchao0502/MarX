@@ -39,6 +39,7 @@
     "co-redis": "^2.1.1",
     "koa": "^2.0.0",
     "koa-convert": "^1.2.0",
+    "mysql": "^2.13.0",
     "redis": "^2.6.3",
     "sequelize": "^3.27.0",
     "superagent": "^3.3.0"
