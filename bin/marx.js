@@ -45,7 +45,7 @@ program
   .alias('b')
   .action((file, options) => require('./marx-babel')(file, options));
 
-// marx babel
+// marx sync
 program
   .command('sync')
   .alias('s')
