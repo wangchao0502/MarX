@@ -1,6 +1,5 @@
 'use strict';
 
-const fs      = require('fs');
 const tpl     = require('./util/tpl');
 const vfs     = require('vinyl-fs');
 const path    = require('path');

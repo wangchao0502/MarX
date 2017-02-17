@@ -4,7 +4,8 @@ const fs    = require('fs');
 const path  = require('path');
 const chalk = require('chalk');
 
-const log = console.log;
+const log  = console.log;
+const noop = () => {};
 
 const parseTpl = (template, map, fallback) => {
   const get = (path, obj, fb) => path.split('.').reduce((res, key) => res[key] || fb || `$\{${path}}`, obj);
@@ -28,7 +29,7 @@ const createTemplate = (curPath, templateMap, params) => {
     const targetPath = path.resolve(curPath, templateMap[templatePath]);
 
     log(chalk.green(`create ${targetPath.replace(curPath + '/', '')}`));
-    fs.writeFile(targetPath, parseTpl(template, params));
+    fs.writeFile(targetPath, parseTpl(template, params), noop);
   }
 };
 
