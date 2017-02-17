@@ -35,7 +35,9 @@ export default class LoginController extends BaseController {
       const account = await this.LoginService.loginCheck(username, password);
 
       if (account) {
-        ctx.session.cookie.maxAge = remember ? redisConfig[process.env.NODE_ENV].cookie.maxAge : null;
+        ctx.session.cookie.maxAge = remember ?
+          redisConfig[process.env.NODE_ENV].cookie.maxAge :
+          null;
         ctx.session.user = account;
         ctx.json(SUCCESS);
       } else {

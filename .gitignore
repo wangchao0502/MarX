@@ -5,7 +5,7 @@ npm-debug.log
 build/
 dump.rdb
 yarn-error.log
-
+.eslintcache
 base/
 filter/
 middleware/
