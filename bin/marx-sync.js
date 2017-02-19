@@ -6,9 +6,14 @@ const path   = require('path');
 const chalk  = require('chalk');
 const Models = require(path.resolve(cwd, 'server/model/index')).Models;
 
+const info   = text => log(chalk.green(`\n${text}\n`));
+
 Object.keys(Models).forEach((key) => {
-  log(chalk.red(`Create Table ${key}`));
-  Models[key].sync();
+  info(`Create Table ${key}`);
+
+  Models[key].sync(() => {
+    console.log('test')
+  });
 });
 
 // process.exit(0);

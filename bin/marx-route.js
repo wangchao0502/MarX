@@ -9,12 +9,15 @@ const log     = console.log;
 const cwd     = process.cwd();
 const padding = string.padding;
 const trueFuc = () => true;
+const info    = text => log(chalk.green(`\n${text}\n`));
+const remind  = text => log(chalk.red(`\n${text}\n`));
+
 
 const list = (routeLines) => {
-  log(chalk.red('\nRouter List:\n'));
-  log(chalk.green(
+  remind('Router List:');
+  info(
     routeLines.map((r, index) => `${padding(index + 1, 3, '0', 'left')}: ${r}`).join('\n')
-  ));
+  );
 };
 
 const find = (url, routes, controller, method) => {
@@ -29,12 +32,12 @@ const find = (url, routes, controller, method) => {
   if (!controller) filters[2] = trueFuc;
   if (!method)     filters[1] = trueFuc;
 
-  log(chalk.red('\nFind Result:\n'));
-  log(chalk.green((
+  remind('Find Result:');
+  info((
     route = routes.filter(x => filters.every(filter => filter(x)))).length ?
       route.map(x => x.join(' ')).join('\n') :
       'Not Found'
-  ));
+  );
 };
 
 const route = (url, options) => {
@@ -45,8 +48,8 @@ const route = (url, options) => {
   try {
     data = fs.readFileSync(configPath, 'utf8');
   } catch (err) {
-    log(chalk.red(err));
-    log(chalk.red('router.config file cannot find, please excute `npm run dev` to generate it.'));
+    remind(err);
+    remind('router.config file cannot find, please excute `npm run dev` to generate it.');
   }
 
   const routeLines = data.split('\n').slice(2);

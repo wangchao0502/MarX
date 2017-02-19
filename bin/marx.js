@@ -25,6 +25,7 @@ program
 // marx dashboard
 program
   .command('dashboard')
+  .alias('d')
   .description('show running status in a dashboard')
   .action(() => require('./marx-dashboard'));
 
@@ -50,5 +51,17 @@ program
   .command('sync')
   .alias('s')
   .action(() => require('./marx-babel')(path.resolve(__dirname, './marx-sync')));
+
+// marx publish
+program
+  .command('publish')
+  .alias('p')
+  .action(() => require('./marx-publish'));
+
+// marx watch
+program
+  .command('watch')
+  .alias('w')
+  .action(() => require('./marx-watch'));
 
 program.parse(process.argv);
