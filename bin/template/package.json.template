@@ -14,7 +14,8 @@
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
     "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore",
     "watch": "marx watch",
-    "publish": "marx publish"
+    "publish": "marx publish",
+    "production": "NODE_ENV=production node publish/app.js"
   },
   "pre-commit": [
     "precommit-msg",
