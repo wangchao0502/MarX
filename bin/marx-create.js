@@ -42,7 +42,7 @@ const tplMiddleware = function(dest, boil) {
       return cb();
     }
 
-    info(`create ${file.path.replace(boil + '/', '')}`);
+    log(chalk.green(`create ${file.path.replace(boil + '/', '')}`));
 
     this.push(file);
     cb();
