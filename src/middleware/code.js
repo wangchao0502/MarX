@@ -1,7 +1,9 @@
 import path from 'path';
 
 const cwd  = process.cwd();
-const CODE = require(path.join(cwd, 'server/config/code'));
+const ENV  = process.env.NODE_ENV;
+const prod = ENV === 'production' ? 'publish' : '';
+const CODE = require(path.join(cwd, prod, 'server/config/code'));
 
 const code = async (ctx, next) => {
   ctx.CODE = CODE;

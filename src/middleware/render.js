@@ -9,9 +9,12 @@ const createEnv = (opts) => {
     throwOnUndefined = false,
   } = opts;
 
-  const cwd = process.cwd();
+  const cwd  = process.cwd();
+  const ENV  = process.env.NODE_ENV;
+  const prod = ENV === 'production' ? 'publish' : '';
+
   const env = new nunjucks.Environment(
-    new nunjucks.FileSystemLoader(path.resolve(cwd, 'server/view'), { noCache, watch }),
+    new nunjucks.FileSystemLoader(path.resolve(cwd, prod, 'server/view'), { noCache, watch }),
     { autoescape, throwOnUndefined },
   );
 

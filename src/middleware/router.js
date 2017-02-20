@@ -3,14 +3,16 @@ import path from 'path';
 import Router from 'koa-router';
 
 const cwd          = process.cwd();
+const ENV          = process.env.NODE_ENV;
+const prodPath     = ENV === 'production' ? 'publish' : '';
 const router       = new Router();
 const noop         = () => {};
 const routerConfig = {};
 const controllers  = {};
 
-const controllerDirPath = path.join(cwd, 'server/controller');
-const defaultRouterPath = path.join(cwd, 'server/router/default.json');
-const routerConfigPath  = path.join(cwd, 'server/router/router.config');
+const controllerDirPath = path.join(cwd, prodPath, 'server/controller');
+const defaultRouterPath = path.join(cwd, prodPath, 'server/router/default.json');
+const routerConfigPath  = path.join(cwd, prodPath, 'server/router/router.config');
 
 fs.readdirSync(controllerDirPath).forEach((file) => {
   if (/\.js$/.test(file)) {
@@ -65,7 +67,6 @@ Object.keys(controllers).forEach((ctrlName) => {
     router[item.method](item.url, ...item.middleware, controller[item.fnName]);
   });
 });
-
 
 // write config into file
 const PRE_COMMENT = '# This file is auto generated when server is started.\n';
