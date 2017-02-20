@@ -1,14 +1,17 @@
 // superman build pre && superman hash && superman cdn
 // mkdir publish || true
 // babel boilerplate/server --out-dir boilerplate/publish -x .js
-const tpl   = require('./util/tpl');
-const path  = require('path');
-const chalk = require('chalk');
-const spawn = require('child_process').spawn;
+const tpl     = require('./util/tpl');
+const vfs     = require('vinyl-fs');
+const path    = require('path');
+const chalk   = require('chalk');
+const spawn   = require('child_process').spawn;
+const through = require('through2');
 
-const log  = console.log;
-const cwd  = process.cwd();
-const info = text => log(chalk.green(`\n${text}\n`));
+const log    = console.log;
+const cwd    = process.cwd();
+const info   = text => log(chalk.green(`\n${text}\n`));
+const remind = text => log(chalk.red(`\n${text}\n`));
 
 tpl.createDir(cwd, ['publish']);
 
@@ -45,12 +48,35 @@ const cdn = (cb) => {
     });
 };
 
+const tplMiddleware = function(dest) {
+  return through.obj(function(file, enc, cb) {
+    if (!file.stat.isFile()) {
+      return cb();
+    }
+
+    log(chalk.green(`copy ${file.path.replace('server/', 'publish/server/')}`));
+
+    this.push(file);
+    cb();
+  });
+};
+
+const copyExtraFiles = (cb) => {
+  const dest = path.resolve(cwd, 'publish');
+  remind('Copy Extra !.js Files...');
+
+  vfs.src(['./server/**/*.*', './package.json', '!./server/**/*.js'], { cwd, cwdbase: true, dot: true })
+    .pipe(tplMiddleware(dest))
+    .pipe(vfs.dest(dest))
+    .on('end', () => cb && cb());
+};
+
 const babel = (cb) => {
   info('Compile Server-side Js File');
 
   spawn('babel', [
       '--no-babelrc', 'server',
-      '--out-dir', 'publish',
+      '--out-dir', 'publish/server',
       '-x', '.js',
       '--presets', 'es2015,stage-0',
       '--plugins', 'transform-runtime,add-module-exports,transform-decorators-legacy'
@@ -61,4 +87,5 @@ const babel = (cb) => {
     });
 };
 
-preBuild(() => hash(() => cdn(() => babel())));
+// preBuild(() => hash(() => cdn(() => babel())));
+babel(() => copyExtraFiles());
