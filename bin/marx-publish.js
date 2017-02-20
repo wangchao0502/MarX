@@ -1,6 +1,3 @@
-// superman build pre && superman hash && superman cdn
-// mkdir publish || true
-// babel boilerplate/server --out-dir boilerplate/publish -x .js
 const tpl     = require('./util/tpl');
 const vfs     = require('vinyl-fs');
 const path    = require('path');
@@ -10,15 +7,22 @@ const through = require('through2');
 
 const log    = console.log;
 const cwd    = process.cwd();
-const info   = text => log(chalk.green(`\n${text}\n`));
-const remind = text => log(chalk.red(`\n${text}\n`));
+const info   = text => log(chalk.green(`\n${text}`));
+const remind = text => log(chalk.red(`\n${text}`));
 
-tpl.createDir(cwd, ['publish']);
+const superman = path.resolve(__dirname, '../node_modules/@youzan/superman/index.js');
+const babelCli = path.resolve(__dirname, '../node_modules/babel-cli/bin/babel.js');
+
+const createDir = (cb) => {
+  tpl.createDir(cwd, ['publish']);
+  cb && cb();
+};
+
 
 const preBuild = (cb) => {
   info('Compile Client-side Js Files');
 
-  spawn('superman', ['build', 'pre'], { stdio: 'inherit' })
+  spawn(superman, ['build', 'pre'], { stdio: 'inherit' })
     .on('close', () => {
       info('Compile Client-side Js Files Finish');
 
@@ -29,7 +33,7 @@ const preBuild = (cb) => {
 const hash = (cb) => {
   info('Generate Client-side Js Files Hash Code');
 
-  spawn('superman', ['hash'], { stdio: 'inherit' })
+  spawn(superman, ['hash'], { stdio: 'inherit' })
     .on('close', () => {
       info('Generate Client-side Js Files Hash Code Finish');
 
@@ -40,7 +44,7 @@ const hash = (cb) => {
 const cdn = (cb) => {
   info('Upload Client-side Js Files to CDN');
 
-  spawn('superman', ['cdn'], { stdio: 'inherit' })
+  spawn(superman, ['cdn'], { stdio: 'inherit' })
     .on('close', () => {
       info('Upload Client-side Js Files to CDN Finish');
 
@@ -63,7 +67,7 @@ const tplMiddleware = function(dest) {
 
 const copyExtraFiles = (cb) => {
   const dest = path.resolve(cwd, 'publish');
-  remind('Copy Extra !.js Files...');
+  info('Copy Extra !.js Files...');
 
   vfs.src(['./server/**/*.*', './package.json', '!./server/**/*.js'], { cwd, cwdbase: true, dot: true })
     .pipe(tplMiddleware(dest))
@@ -74,7 +78,7 @@ const copyExtraFiles = (cb) => {
 const babel = (cb) => {
   info('Compile Server-side Js File');
 
-  spawn('babel', [
+  spawn(babelCli, [
       '--no-babelrc', 'server',
       '--out-dir', 'publish/server',
       '-x', '.js',
@@ -87,5 +91,17 @@ const babel = (cb) => {
     });
 };
 
-// preBuild(() => hash(() => cdn(() => babel())));
-babel(() => copyExtraFiles());
+const run = (...tasks) => {
+  const program = [() => {}];
+
+  while (tasks.length) {
+    const task = tasks.pop();
+    const pos  = program.length - 1;
+
+    program.push(() => task(program[pos]));
+  }
+
+  program[program.length - 1]();
+};
+
+run(createDir, preBuild, hash, cdn, babel, copyExtraFiles);
