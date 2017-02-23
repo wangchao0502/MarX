@@ -10,11 +10,14 @@ let config = {};
 
 try {
   config = {
-    presets: ['es2015', 'stage-0'],
+    presets: [
+      'babel-preset-es2015',
+      'babel-preset-stage-0'
+    ].map(require.resolve),
     plugins: [
-      'add-module-exports',
-      'transform-decorators-legacy'
-    ]
+      'babel-plugin-add-module-exports',
+      'babel-plugin-transform-decorators-legacy'
+    ].map(require.resolve)
   };
 } catch (err) {
   Logger.error('==> ERROR: Error parsing your .babelrc.');
