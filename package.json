@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
@@ -13,7 +13,7 @@
   "author": "Raphael",
   "license": "ISC",
   "dependencies": {
-    "@youzan/superman": "~0.3.0",
+    "@youzan/superman": "~0.4.0",
     "babel-cli": "~6.23.0",
     "babel-core": "~6.23.1",
     "babel-plugin-add-module-exports": "~0.2.1",
