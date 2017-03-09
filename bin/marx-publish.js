@@ -87,7 +87,8 @@ const babel = (cb) => {
       [
         "babel-plugin-transform-runtime",
         "babel-plugin-transform-decorators-legacy",
-        "babel-plugin-transform-object-rest-spread"
+        "babel-plugin-transform-object-rest-spread",
+        "babel-plugin-transform-es2015-modules-commonjs"
       ].map(require.resolve).join(',')
     ], { stdio: 'inherit' })
     .on('close', () => {
