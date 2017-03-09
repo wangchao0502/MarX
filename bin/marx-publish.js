@@ -82,8 +82,13 @@ const babel = (cb) => {
       '--no-babelrc', 'server',
       '--out-dir', 'publish/server',
       '-x', '.js',
-      '--presets', 'es2015,es2016,es2017',
-      '--plugins', 'transform-runtime,add-module-exports,transform-decorators-legacy'
+      '--presets', require.resolve('babel-preset-env'),
+      '--plugins',
+      [
+        "babel-plugin-transform-runtime",
+        "babel-plugin-transform-decorators-legacy",
+        "babel-plugin-transform-object-rest-spread"
+      ].map(require.resolve).join(',')
     ], { stdio: 'inherit' })
     .on('close', () => {
       info('Compile Server-side Js File Completed!');

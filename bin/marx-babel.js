@@ -10,18 +10,24 @@ let config = {};
 
 try {
   config = {
-    presets: [
-      'babel-preset-es2015',
-      'babel-preset-es2016',
-      'babel-preset-es2017',
-    ].map(require.resolve),
-    plugins: [
-      'babel-plugin-add-module-exports',
-      'babel-plugin-transform-decorators-legacy'
+    "presets": [
+      [
+        require.resolve("babel-preset-env"),
+        {
+          "targets": {
+            "node": 6.9
+          },
+          "debug": true
+        }
+      ]
+    ],
+    "plugins": [
+      "babel-plugin-transform-runtime",
+      "babel-plugin-transform-decorators-legacy",
+      "babel-plugin-transform-object-rest-spread"
     ].map(require.resolve)
   };
 } catch (err) {
-  Logger.error('==> ERROR: Error parsing your .babelrc.');
   Logger.error(err);
 }
 
