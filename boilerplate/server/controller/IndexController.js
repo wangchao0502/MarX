@@ -43,8 +43,13 @@ export default class IndexController extends BaseController {
     ]);
   }
 
-  async check(ctx, next) {
-    this.Logger.debug('Checking... Everything is OK');
+  async httpRequestLog(ctx, next) {
+    const url = ctx.request.url;
+    const method = ctx.request.method;
+    const start = new Date();
+    this.Logger.info(`--> ${method} ${url}`);
     await next();
+    const end = new Date();
+    this.Logger.info(`<-- ${method} ${url} ${end.getTime() - start.getTime()}ms`);
   }
 }
