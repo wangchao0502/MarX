@@ -10,8 +10,8 @@ const cwd    = process.cwd();
 const info   = text => log(chalk.green(`\n${text}`));
 const remind = text => log(chalk.red(`\n${text}`));
 
-const superman = path.resolve(__dirname, '../node_modules/@youzan/superman/index.js');
-const babelCli = path.resolve(__dirname, '../node_modules/babel-cli/bin/babel.js');
+const superman = require.resolve('@youzan/superman');
+const babelCli = require.resolve('babel-cli/bin/babel.js');
 
 const createDir = (cb) => {
   tpl.createDir(cwd, ['publish']);
