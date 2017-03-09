@@ -17,7 +17,7 @@ const routerConfigPath  = path.join(cwd, prodPath, 'server/router/router.config'
 fs.readdirSync(controllerDirPath).forEach((file) => {
   if (/\.js$/.test(file)) {
     const name = file.replace('.js', '');
-    controllers[name] = require(path.join(controllerDirPath, file));
+    controllers[name] = require(path.join(controllerDirPath, file)).default;
   }
 });
 /*
