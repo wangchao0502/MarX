@@ -1,10 +1,10 @@
 {
   "name": "@youzan/marx",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
-    "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}",
+    "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{} --presets env --plugins transform-decorators-legacy,transform-object-rest-spread,transform-runtime",
     "build": "npm run build:mkdir && npm run build:compiler"
   },
   "bin": {
