@@ -82,7 +82,7 @@ const babel = (cb) => {
       '--no-babelrc', 'server',
       '--out-dir', 'publish/server',
       '-x', '.js',
-      '--presets', 'es2015,stage-0',
+      '--presets', 'stage-0',
       '--plugins', 'transform-runtime,add-module-exports,transform-decorators-legacy'
     ], { stdio: 'inherit' })
     .on('close', () => {
