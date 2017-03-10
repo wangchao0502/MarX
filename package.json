@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
@@ -52,8 +52,7 @@
       {
         "targets": {
           "node": 6.9
-        },
-        "debug": true
+        }
       }
     ]],
     "plugins": [

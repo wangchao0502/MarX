@@ -16,8 +16,7 @@ try {
         {
           "targets": {
             "node": 6.9
-          },
-          "debug": true
+          }
         }
       ]
     ],
