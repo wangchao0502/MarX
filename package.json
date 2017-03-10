@@ -1,10 +1,10 @@
 {
   "name": "@youzan/marx",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
-    "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{} --presets env --plugins transform-decorators-legacy,transform-object-rest-spread,transform-runtime",
+    "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}",
     "build": "npm run build:mkdir && npm run build:compiler"
   },
   "bin": {
@@ -45,5 +45,21 @@
     "eslint-plugin-import": "~2.2.0",
     "eslint-plugin-jsx-a11y": "~4.0.0",
     "eslint-plugin-react": "~6.9.0"
+  },
+  "babel": {
+    "presets": [[
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "debug": true
+      }
+    ]],
+    "plugins": [
+      "transform-runtime",
+      "transform-decorators-legacy",
+      "transform-object-rest-spread"
+    ]
   }
 }

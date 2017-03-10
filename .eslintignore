@@ -3,3 +3,6 @@ server/babel.*.js
 bin/
 boilerplates/
 webpack.config.js
+filter/
+middleware/
+base/

@@ -15,7 +15,7 @@
     "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore",
     "watch": "marx watch",
     "publish": "marx publish",
-    "production": "NODE_ENV=production node publish/server/app.js | bunyan --time local -o short"
+    "production": "NODE_ENV=production node publish/server/app.js | bunyan --time local"
   },
   "pre-commit": [
     "precommit-msg",

@@ -79,16 +79,8 @@ const babel = (cb) => {
   info('Compile Server-side Js File');
 
   spawn(babelCli, [
-      '--no-babelrc', 'server',
-      '--out-dir', 'publish/server',
-      '-x', '.js',
-      '--presets', require.resolve('babel-preset-env'),
-      '--plugins',
-      [
-        "babel-plugin-transform-runtime",
-        "babel-plugin-transform-decorators-legacy",
-        "babel-plugin-transform-object-rest-spread"
-      ].map(require.resolve).join(',')
+      'server', '--out-dir', 'publish/server',
+      '-x', '.js'
     ], { stdio: 'inherit' })
     .on('close', () => {
       info('Compile Server-side Js File Completed!');

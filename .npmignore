@@ -8,6 +8,5 @@ yarn-error.log
 src/
 .eslintrc
 .eslintignore
-.babelrc
 .editorconfig
 .gitignore

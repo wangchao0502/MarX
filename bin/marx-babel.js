@@ -33,7 +33,11 @@ try {
 
 // loading runtime
 require('babel-register')(config);
-require('babel-polyfill');
+// transfrom to es5 code, if use higher version node, it is not necessory
+const versions = process.versions.node.split('.');
+if (!(+versions[0] >= 6 && +versions[1] >= 9)) {
+  require('babel-polyfill');
+}
 
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
