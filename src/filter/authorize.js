@@ -1,14 +1,15 @@
 // check user has login
 function authorize(target, name, descriptor) {
-  const oldValue = descriptor.value.bind(this);
+  const oldValue = descriptor.value;
 
   descriptor.value = async function(ctx, next) {
     const { user } = ctx.session;
 
     if (user) {
-      await oldValue(ctx, next);
+      await oldValue.bind(this)(ctx, next);
     } else {
-      ctx.redirect(`/login?redirect=${ctx.request.url}`);
+      console.log(ctx.request);
+      ctx.redirect(`/login?redirect=${ctx.request.href}`);
     }
   };
 
