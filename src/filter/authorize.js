@@ -8,7 +8,7 @@ function authorize(target, name, descriptor) {
     if (user) {
       await oldValue(ctx, next);
     } else {
-      ctx.redirect(`/login?redirect=${ctx.request.href}`);
+      ctx.redirect(`/login?redirect=${ctx.request.url}`);
     }
   };
 
