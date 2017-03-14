@@ -5,7 +5,7 @@ function errorMiddleware(msg) {
     ctx.redirect(msg);
   } else {
     let errorMsg = '';
-    let errorData = null;
+    let errorData;
     if (msg instanceof Error) {
       errorMsg = msg.message;
     } else if (typeof msg === 'string') {
