@@ -6,11 +6,17 @@ function errorMiddleware(...args) {
   let errorData = {};
 
   if (args.length === 0) {
-    ctx.body = { code: -1, msg: 'unknown error' };
+    ctx.body = { code: errorCode, msg: 'unknown error' };
   } else if (args.length === 1) {
     if (typeof args[0] === 'number') ctx.status = args[0];
-    if (typeof args[0] === 'object') ctx.body = { ...args[0] };
-    if (typeof  args[0] === 'string') ctx.body = { code: errorCode, msg: args[0] };
+    if (typeof args[0] === 'object') {
+      if (args[0] instanceof Error) {
+        ctx.body = { code: errorCode, msg: args[0].message };
+      } else {
+        ctx.body = { ...args[0] };
+      }
+    }
+    if (typeof args[0] === 'string') ctx.body = { code: errorCode, msg: args[0] };
   } else if (args.length === 2) {
     errorData = args[1];
 
