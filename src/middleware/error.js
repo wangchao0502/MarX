@@ -1,19 +1,30 @@
-function errorMiddleware(msg) {
+function errorMiddleware(...args) {
   const ctx = this;
-  if (!isNaN(msg) && [404, 403, 500].indexOf(+msg) > -1) {
-    ctx.status = msg;
-    ctx.redirect(msg);
-  } else {
-    let errorMsg = '';
-    let errorData;
-    if (msg instanceof Error) {
-      errorMsg = msg.message;
-    } else if (typeof msg === 'string') {
-      errorMsg = msg;
-    } else if (typeof msg === 'object') {
-      errorData = msg;
+
+  let errorCode = -1;
+  let errorMsg = 'error';
+  let errorData = {};
+
+  if (args.length === 0) {
+    ctx.body = { code: -1, msg: 'unknown error' };
+  } else if (args.length === 1) {
+    if (typeof args[0] === 'number') ctx.status = args[0];
+    if (typeof args[0] === 'object') ctx.body = { ...args[0] };
+    if (typeof  args[0] === 'string') ctx.body = { code: errorCode, msg: args[0] };
+  } else if (args.length === 2) {
+    errorData = args[1];
+
+    if (typeof args[0] === 'object') {
+      errorCode = args[0].code;
+      errorMsg = args[0].msg;
+    } else if (args[0] instanceof Error) {
+      errorMsg = args[0].message;
     }
-    ctx.body = { code: -1, msg: errorMsg, data: errorData };
+    if (typeof args[0] === 'string') errorMsg = args[0];
+
+    ctx.body = { code: errorCode, msg: errorMsg, data: errorData };
+  } else {
+    ctx.body = { code: errorCode, msg: 'ctx.error call failed' };
   }
 }
 
