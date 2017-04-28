@@ -2,24 +2,37 @@ import fs from 'fs';
 import path from 'path';
 import Router from 'koa-router';
 
-const cwd          = process.cwd();
-const ENV          = process.env.NODE_ENV;
-const prodPath     = ENV === 'production' ? 'publish' : '';
-const router       = new Router();
-const noop         = () => {};
-const routerConfig = {};
-const controllers  = {};
+const cwd           = process.cwd();
+const ENV           = process.env.NODE_ENV;
+const prodPath      = ENV === 'production' ? 'publish' : '';
+const router        = new Router();
+const noop          = () => {};
+const routerConfig  = {};
+const controllers   = {};
 
 const controllerDirPath = path.join(cwd, prodPath, 'server/controller');
-const defaultRouterPath = path.join(cwd, prodPath, 'server/router/default.json');
+const routerPath = path.join(cwd, prodPath, 'server/router');
 const routerConfigPath  = path.join(cwd, prodPath, 'server/router/router.config');
 
+// get all controller class
 fs.readdirSync(controllerDirPath).forEach((file) => {
   if (/\.js$/.test(file)) {
     const name = file.replace('.js', '');
     controllers[name] = require(path.join(controllerDirPath, file)).default;
   }
 });
+
+// get all json file route config
+let defaultRouter = {}
+fs.readdirSync(routerPath).forEach((file) => {
+  if (/\.json$/.test(file)) {
+    defaultRouter = Object.assign(
+      defaultRouter,
+      JSON.parse(fs.readFileSync(path.join(controllerDirPath, file)) || '{}')
+    );
+  }
+});
+
 /*
  * key is Controller name, value is a array with object
  * {
@@ -27,7 +40,6 @@ fs.readdirSync(controllerDirPath).forEach((file) => {
  *   url
  * }
  */
-const defaultRouterConfig = {};
 
 const addRouterConfig = (item) => {
   const { method } = item;
@@ -40,7 +52,7 @@ const addRouterConfig = (item) => {
 const formatRouter = item => `[${item.method.toUpperCase()}] ${item.url} => ${item.ctrlName}.${item.fnName}`;
 
 // deal with defaultRouter
-const defaultRouter = JSON.parse(fs.readFileSync(defaultRouterPath) || '{}');
+const defaultRouterConfig = {};
 Object.keys(defaultRouter).forEach((key) => {
   const [method, url] = key.split(' ');
   const [ctrlName, fnName] = defaultRouter[key].split('.');
