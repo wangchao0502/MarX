@@ -1,1 +1,1 @@
-Models.${ModelName} = require('./${ModelName}')(sequelize, Sequelize);
+Models.${ModelName} = require('./${ModelName}').default(sequelize, Sequelize);
