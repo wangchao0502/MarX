@@ -22,7 +22,7 @@ const createDir = (cb) => {
 const preBuild = (cb) => {
   info('Compile Client-side Js Files');
 
-  spawn(superman, ['build', 'pre'], { stdio: 'inherit' })
+  spawn(superman, ['prd'], { stdio: 'inherit' })
     .on('close', () => {
       info('Compile Client-side Js Files Finish');
 
