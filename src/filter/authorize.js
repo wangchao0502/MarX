@@ -6,7 +6,7 @@ function authorize(target, name, descriptor) {
     const { user } = ctx.session;
 
     if (user) {
-      await oldValue.bind(this)(ctx, next);
+      return await oldValue.bind(this)(ctx, next);
     } else {
       console.log(ctx.request);
       ctx.redirect(`/login?redirect=${ctx.request.href}`);
