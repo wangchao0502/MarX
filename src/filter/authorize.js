@@ -8,7 +8,6 @@ function authorize(target, name, descriptor) {
     if (user) {
       return await oldValue.bind(this)(ctx, next);
     } else {
-      console.log(ctx.request);
       ctx.redirect(`/login?redirect=${ctx.request.href}`);
     }
   };
