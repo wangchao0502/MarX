@@ -28,7 +28,7 @@ fs.readdirSync(routerPath).forEach((file) => {
   if (/\.json$/.test(file)) {
     defaultRouter = Object.assign(
       defaultRouter,
-      JSON.parse(fs.readFileSync(path.join(controllerDirPath, file)) || '{}')
+      JSON.parse(fs.readFileSync(path.join(routerPath, file)) || '{}')
     );
   }
 });
