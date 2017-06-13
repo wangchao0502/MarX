@@ -28,11 +28,12 @@ const renderMiddleware = (opts) => {
   // 创建Nunjucks的env对象:
   const env = createEnv(opts);
   const ext = opts.ext || '.njk';
+  const data = opts.data || {};
   return async (ctx, next) => {
     // 给ctx绑定render函数:
     ctx.render = (view, model) => {
       // 把render后的内容赋值给response.body:
-      ctx.response.body = env.render(view + ext, Object.assign({}, ctx.state || {}, model || {}));
+      ctx.response.body = env.render(view + ext, { ...data, ...ctx.state, ...model });
       // 设置Content-Type:
       ctx.response.type = 'text/html';
     };
