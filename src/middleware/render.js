@@ -31,7 +31,7 @@ const renderMiddleware = (opts) => {
 
   // load global values
   Object.keys(opts.global || {}).forEach(key => {
-    env.addGlobal(key. opts.global[key]);
+    env.addGlobal(key, opts.global[key]);
   });
 
   return async (ctx, next) => {

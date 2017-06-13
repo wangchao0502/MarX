@@ -1,11 +1,12 @@
 {
   "name": "@youzan/marx",
-  "version": "0.4.20",
+  "version": "0.4.21",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
     "build:compiler": "ls src | sed 's/\\s+/\\n/g' | xargs -t -I {} babel src/{} --out-dir ./{}",
-    "build": "npm run build:mkdir && npm run build:compiler"
+    "build": "npm run build:mkdir && npm run build:compiler",
+    "prepublish": "npm run build"
   },
   "bin": {
     "marx": "./bin/marx.js"
