@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.4.21",
+  "version": "0.4.22",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
