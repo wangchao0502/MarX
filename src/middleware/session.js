@@ -5,7 +5,7 @@ import convert from 'koa-convert';
 
 const cwd  = process.cwd();
 const ENV  = process.env.NODE_ENV;
-const prod = ENV === 'production' ? 'publish' : '';
+const prod = (ENV === 'production' || ENV === 'test') ? 'publish' : '';
 
 const pkgJson     = require(path.join(cwd, prod, 'package.json'));
 const redisConfig = require(path.join(cwd, prod, 'server/config/redis'));
