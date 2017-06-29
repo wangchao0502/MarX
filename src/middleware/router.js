@@ -4,7 +4,7 @@ import Router from 'koa-router';
 
 const cwd           = process.cwd();
 const ENV           = process.env.NODE_ENV;
-const prodPath      = ENV === 'production' ? 'publish' : '';
+const prodPath      = (ENV === 'production' || ENV === 'test') ? 'publish' : '';
 const router        = new Router();
 const noop          = () => {};
 const routerConfig  = {};
