@@ -11,7 +11,7 @@ const createEnv = (opts) => {
 
   const cwd  = process.cwd();
   const ENV  = process.env.NODE_ENV;
-  const prod = ENV === 'production' ? 'publish' : '';
+  const prod = ENV !== 'development' ? 'publish' : '';
 
   const env = new nunjucks.Environment(
     new nunjucks.FileSystemLoader(path.resolve(cwd, prod, 'server/view'), { noCache, watch }),
