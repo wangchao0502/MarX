@@ -1,6 +1,6 @@
 {
   "name": "@youzan/marx",
-  "version": "0.4.29",
+  "version": "0.5.0",
   "description": "我是马克思，你们的精神领袖。",
   "scripts": {
     "build:mkdir": "mkdir base filter middleware || true",
@@ -37,6 +37,7 @@
     "npm-run-all": "~4.0.1",
     "nunjucks": "~3.0.0",
     "through2": "~2.0.3",
+    "ua-parser-js": "~0.7.13",
     "vinyl-fs": "~2.4.4"
   },
   "devDependencies": {
@@ -48,14 +49,16 @@
     "eslint-plugin-react": "~6.9.0"
   },
   "babel": {
-    "presets": [[
-      "env",
-      {
-        "targets": {
-          "node": 6.9
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": 6.9
+          }
         }
-      }
-    ]],
+      ]
+    ],
     "plugins": [
       "transform-runtime",
       "transform-decorators-legacy",
